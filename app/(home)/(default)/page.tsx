@@ -14,7 +14,7 @@ export default function Page() {
   return (
     <div className="w-full  to-white overflow-x-hidden relative">
       <HeroNEW/>
-      <SmallAbout/>
+      {/* <SmallAbout/>
         <ProgramsSection/>
         <Daycare/>
               <Programs/>
@@ -23,7 +23,7 @@ export default function Page() {
         <OurOffices/>
       <BlogSection/>
        
-      <Faqsection/>
+      <Faqsection/> */}
 
     </div>
   );

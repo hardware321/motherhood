@@ -51,12 +51,12 @@ const Navbar = () => {
   }, [pathname]);
 
   const navLinks = [
-    { href: "/about", label: "About Us" },
-    { href: "/#programs", label: "Programs" },
-    { href: "/Whyus", label: "Why Us" },
-    { href: "/admission", label: "Admissions" },
-    { href: "/franchise", label: "Franchise" },
-    { href: "/Ourcenters", label: "Our Centers" },
+    { href: "/", label: "About Us" },
+    { href: "/", label: "Programs" },
+    { href: "/", label: "Why Us" },
+    { href: "/", label: "Admissions" },
+    { href: "/", label: "Franchise" },
+    { href: "/", label: "Our Centers" },
     { href: "/contact", label: "Contact Us" },
   ];
 
@@ -154,7 +154,7 @@ const Navbar = () => {
           <div className="flex items-center gap-4 md:gap-6">
             
             {/* Elegant Button matching Hero Section */}
-            <Link href="/admission" className="hidden sm:block">
+            <Link href="/" className="hidden sm:block">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -240,7 +240,7 @@ const Navbar = () => {
                 transition={{ delay: 0.4 }}
                 className="mt-6"
               >
-                <Link href="/admission" onClick={() => setMobileMenuOpen(false)}>
+                <Link href="/" onClick={() => setMobileMenuOpen(false)}>
                   <button className={`
                     w-full bg-[#E83D59] text-white py-4 rounded-2xl font-bold text-lg 
                     shadow-lg shadow-rose-200 flex justify-center items-center gap-2 transition-all

@@ -12,10 +12,8 @@ import { Nunito, Sniglet } from 'next/font/google';
 import logo from "../../public/logopng.png"; 
 
 // --- FONTS ---
-// Sniglet for the chunky, soft accents (like the button)
 const accentFont = Sniglet({ weight: ['400', '800'], subsets: ['latin'] });
-// Nunito for highly readable, soft, rounded body text
-const bodyFont = Nunito({ subsets: ['latin'], weight: ['400', '600', '700', '800', '900'] });
+const bodyFont = Nunito({ subsets: ['latin'], weight: ['500', '600', '700', '800', '900'] });
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -62,22 +60,22 @@ const Navbar = () => {
     { href: "/contact", label: "Contact Us" },
   ];
 
-  // Softened social links to match the peaceful pastel theme
+  // Softened social links utilizing the logo colors where appropriate
   const socialLinks = [
     { 
       icon: Facebook, 
       href: "https://www.facebook.com/littledreamersatcambridge/", 
-      className: "text-blue-400 bg-blue-50 hover:bg-blue-100 border-blue-100" 
+      className: "text-[#3B6CA8] bg-blue-50/50 hover:bg-[#3B6CA8] hover:text-white border-blue-100" 
     },
     { 
       icon: Instagram, 
       href: "https://www.instagram.com/little_dreamers_at_cambridge/", 
-      className: "text-rose-400 bg-rose-50 hover:bg-rose-100 border-rose-100" 
+      className: "text-[#E83D59] bg-rose-50/50 hover:bg-[#E83D59] hover:text-white border-rose-100" 
     },
     { 
       icon: Youtube, 
       href: "https://www.youtube.com/@LittleDreamersAtCambridge", 
-      className: "text-red-400 bg-red-50 hover:bg-red-100 border-red-100" 
+      className: "text-red-500 bg-red-50/50 hover:bg-red-500 hover:text-white border-red-100" 
     },
   ];
 
@@ -85,19 +83,19 @@ const Navbar = () => {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          // Uses the warm off-white from the hero section when scrolled
-          ? "bg-[#fffaf8]/90 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.03)] py-3"
+          // Matches the warm off-white background of the hero section
+          ? "bg-[#fdfbf7]/95 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.04)] py-3"
           : "bg-transparent py-4 md:py-6"
       }`}
     >
-      <div className="container mx-auto px-4 md:px-6 max-w-7xl">
+      <div className="max-w-[1440px] px-4 md:px-12 mx-auto">
         <div className="flex items-center justify-between">
 
           {/* --- LOGO --- */}
           <Link href="/" className="flex items-center gap-3 group">
             <motion.div 
-              whileHover={{ scale: 1.05, rotate: -2 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
               className="relative w-[220px] md:w-[260px] transition-transform duration-300"
             >
               <Image 
@@ -137,13 +135,13 @@ const Navbar = () => {
                         transition={{ type: "spring", stiffness: 300, damping: 20 }}
                         className="absolute -top-3 left-1/2 -translate-x-1/2"
                       >
-                         <Heart className="w-3.5 h-3.5 text-rose-400 fill-rose-300 animate-pulse" />
+                         <Heart className="w-3.5 h-3.5 text-[#E83D59] fill-[#E83D59]/30 animate-pulse" />
                       </motion.div>
                     )}
                   </AnimatePresence>
 
                   <span className={`text-base transition-colors duration-300 ${
-                    isActive ? "text-rose-500 font-black" : "text-stone-500 font-bold hover:text-rose-400"
+                    isActive ? "text-[#E83D59] font-bold" : "text-gray-600 font-semibold hover:text-[#E83D59]"
                   } ${bodyFont.className}`}>
                     {link.label}
                   </span>
@@ -155,16 +153,16 @@ const Navbar = () => {
           {/* --- RIGHT ACTIONS --- */}
           <div className="flex items-center gap-4 md:gap-6">
             
-            {/* Softened Chunky "Enroll" Button to match Hero */}
+            {/* Elegant Button matching Hero Section */}
             <Link href="/admission" className="hidden sm:block">
               <motion.button
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95, y: 2 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 className={`
-                  bg-rose-400 text-white rounded-full px-6 py-2.5 
-                  shadow-[0_4px_0_0_#e11d48] active:shadow-none active:translate-y-[4px] 
-                  flex items-center gap-2 text-sm font-black transition-all border-2 border-rose-500
-                  ${accentFont.className} tracking-wide
+                  bg-[#E83D59] text-white rounded-full px-7 py-2.5 
+                  shadow-lg shadow-rose-200 hover:shadow-xl 
+                  flex items-center gap-2 text-sm font-bold transition-all
+                  ${bodyFont.className} tracking-wide
                 `}
               >
                 Enroll Now <ArrowRight className="w-4 h-4" />
@@ -172,14 +170,14 @@ const Navbar = () => {
             </Link>
 
             {/* Social Icons */}
-            <div className="hidden md:flex items-center gap-2 border-l-2 border-stone-100 pl-6">
+            <div className="hidden md:flex items-center gap-3 border-l-2 border-gray-100 pl-6">
                 {socialLinks.map((social, i) => (
                     <a 
                         key={i} 
                         href={social.href} 
                         target="_blank" 
                         rel="noreferrer"
-                        className={`p-2 rounded-full border transition-all duration-300 hover:-translate-y-1 hover:shadow-sm ${social.className}`}
+                        className={`p-2 rounded-full border transition-all duration-300 hover:-translate-y-1 hover:shadow-md ${social.className}`}
                     >
                         <social.icon className="w-4 h-4" />
                     </a>
@@ -188,7 +186,7 @@ const Navbar = () => {
 
             {/* Mobile Toggle */}
             <button
-              className="xl:hidden p-2 text-stone-500 hover:text-rose-500 hover:bg-rose-50 rounded-full transition-colors"
+              className="xl:hidden p-2 text-gray-500 hover:text-[#E83D59] hover:bg-rose-50 rounded-full transition-colors"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               {mobileMenuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
@@ -205,7 +203,7 @@ const Navbar = () => {
             animate={{ opacity: 1, height: "100vh" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="xl:hidden bg-[#fffaf8] absolute w-full left-0 top-full overflow-y-auto pb-24"
+            className="xl:hidden bg-[#fdfbf7] absolute w-full left-0 top-full overflow-y-auto pb-24 shadow-xl"
           >
             <div className="container mx-auto px-6 py-8 flex flex-col gap-3">
               {navLinks.map((link, i) => {
@@ -221,14 +219,14 @@ const Navbar = () => {
                     <Link
                       href={link.href}
                       onClick={() => setMobileMenuOpen(false)}
-                      className={`block px-5 py-4 rounded-2xl text-lg font-black transition-all border-2 ${bodyFont.className} ${
+                      className={`block px-5 py-4 rounded-2xl text-lg font-bold transition-all border-2 ${bodyFont.className} ${
                         isActive 
-                          ? "text-rose-500 bg-rose-50 border-rose-100 shadow-sm" 
-                          : "text-stone-600 bg-white border-transparent hover:border-stone-100 shadow-sm"
+                          ? "text-[#E83D59] bg-[#E83D59]/5 border-[#E83D59]/10 shadow-sm" 
+                          : "text-gray-600 bg-white border-transparent hover:border-gray-100 shadow-sm"
                       }`}
                     >
                       <div className="flex items-center gap-3">
-                        {isActive ? <Heart className="w-5 h-5 fill-rose-300 text-rose-400" /> : <span className="w-5" />}
+                        {isActive ? <Heart className="w-5 h-5 fill-[#E83D59]/30 text-[#E83D59]" /> : <span className="w-5" />}
                         {link.label}
                       </div>
                     </Link>
@@ -244,10 +242,9 @@ const Navbar = () => {
               >
                 <Link href="/admission" onClick={() => setMobileMenuOpen(false)}>
                   <button className={`
-                    w-full bg-rose-400 text-white py-4 rounded-2xl font-black text-lg 
-                    shadow-[0_5px_0_0_#e11d48] active:shadow-none active:translate-y-[5px]
-                    flex justify-center items-center gap-2 border-2 border-rose-500 transition-all
-                    ${accentFont.className} tracking-wide
+                    w-full bg-[#E83D59] text-white py-4 rounded-2xl font-bold text-lg 
+                    shadow-lg shadow-rose-200 flex justify-center items-center gap-2 transition-all
+                    ${bodyFont.className} tracking-wide
                   `}>
                     Enroll Now <ArrowRight className="w-5 h-5" />
                   </button>
@@ -259,7 +256,7 @@ const Navbar = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5 }}
-                className="flex justify-center gap-4 py-8 border-t-2 border-stone-100 mt-6"
+                className="flex justify-center gap-4 py-8 border-t-2 border-gray-100 mt-6"
               >
                 {socialLinks.map((social, i) => (
                     <a 

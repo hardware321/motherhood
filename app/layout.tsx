@@ -12,7 +12,7 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
-  title: 'Little Dreamers At Cambridge - Nurturing Young Minds with Love and Care',
+  title: 'Motherhood preschool and Daycare - Where Montessori Meets Motherly Love',
   description: 'A loving and safe environment for children to explore, learn, and grow. We provide a holistic approach to early childhood education with experienced educators and a vibrant community.',
   images: [
     {

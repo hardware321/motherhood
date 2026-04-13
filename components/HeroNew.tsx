@@ -9,7 +9,6 @@ import Image from "next/image";
 import { Nunito, Fredoka, Quicksand } from "next/font/google";
 
 import heroImage from "../public/compressed/unconditional.webp";
-
 import image1 from "../public/compressed/beautiful-mother-with-little-daughter.jpg.webp"
 import image2 from "../public/compressed/young-girl-sitting-table-drawing-colorful-picture-with-crayons.jpg.webp"
 import image3 from "../public/compressed/woman-yellow-dress-with-bunch-children-background.jpg.webp"
@@ -45,53 +44,59 @@ const HeroBanner: React.FC = () => {
 
   return (
     <section
-      className={`relative w-full min-h-screen flex items-center overflow-hidden ${bodyFont.className}`}
+      className={`relative w-full min-h-[90vh] sm:min-h-screen flex flex-col sm:flex-row items-center overflow-hidden bg-[#FFF9F5] ${bodyFont.className}`}
     >
-      {/* ── FULL BACKGROUND IMAGE ── */}
-      <Image
-        src={heroImage}
-        alt="Children at Motherhood Preschool"
-        fill
-        priority
-        className="object-cover object-center"
-        sizes="100vw"
-      />
+      {/* ── MOBILE IMAGE (Visible only on small screens) ── */}
+      <div className="relative w-full h-[40vh] sm:hidden">
+        <Image
+          src={heroImage}
+          alt="Children at Motherhood Preschool"
+          fill
+          priority
+          className="object-cover object-center"
+        />
+        {/* Subtle overlay for mobile image to blend into content */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#FFF9F5] via-transparent to-transparent" />
+      </div>
 
-      {/* ── LAYERED GRADIENT OVERLAY ──
-          Left heavy so text is always readable; right fades so image shines through */}
-      <div
-        className="absolute inset-0 z-10"
-        style={{
-          background: `
-            linear-gradient(
-              105deg,
-              rgba(255,249,245,0.97) 0%,
-              rgba(255,249,245,0.92) 28%,
-              rgba(255,249,245,0.70) 52%,
-              rgba(255,249,245,0.18) 78%,
-              rgba(255,249,245,0.04) 100%
-            )
-          `,
-        }}
-      />
+      {/* ── DESKTOP BACKGROUND IMAGE ── */}
+      <div className="hidden sm:block">
+        <Image
+          src={heroImage}
+          alt="Children at Motherhood Preschool"
+          fill
+          priority
+          className="object-cover object-center"
+          sizes="100vw"
+        />
+        {/* Layered Gradient Overlay (Desktop Only) */}
+        <div
+          className="absolute inset-0 z-10"
+          style={{
+            background: `
+              linear-gradient(
+                105deg,
+                rgba(255,249,245,0.97) 0%,
+                rgba(255,249,245,0.92) 28%,
+                rgba(255,249,245,0.70) 52%,
+                rgba(255,249,245,0.18) 78%,
+                rgba(255,249,245,0.04) 100%
+              )
+            `,
+          }}
+        />
+      </div>
 
-      {/* ── BOTTOM FADE for clean section end ── */}
-      <div
-        className="absolute inset-x-0 bottom-0 h-36 z-10 pointer-events-none"
-        style={{ background: "linear-gradient(to top, #FFF9F5 0%, transparent 100%)" }}
-      />
-
-      {/* ── POLKA DOT TEXTURE (very faint, adds warmth) ── */}
+      {/* ── DECORATIVE ELEMENTS ── */}
       <div
         aria-hidden
-        className="absolute inset-0 z-10 pointer-events-none"
+        className="absolute inset-0 z-10 pointer-events-none opacity-30 sm:opacity-100"
         style={{
           backgroundImage: `radial-gradient(circle, rgba(232,61,89,0.07) 1.5px, transparent 1.5px)`,
           backgroundSize: "42px 42px",
         }}
       />
 
-      {/* ── PARTICLES ── */}
       <Particles
         id="hero-particles"
         init={particlesInit}
@@ -101,48 +106,23 @@ const HeroBanner: React.FC = () => {
           particles: {
             color: { value: ["#FCA5A5", "#FDBA74", "#F9A8D4", "#A7F3D0", "#C4B5FD"] },
             move: { enable: true, speed: 0.5, direction: "top", random: true, outModes: "out" },
-            number: { value: 18, density: { enable: true, area: 1000 } },
-            opacity: { value: 0.5 },
+            number: { value: 12, density: { enable: true, area: 800 } },
+            opacity: { value: 0.4 },
             shape: { type: "circle" },
-            size: { value: { min: 5, max: 13 } },
+            size: { value: { min: 4, max: 10 } },
           },
         }}
       />
 
-      {/* ── FLOATING DECORATIVE EMOJIS ── */}
-      <div aria-hidden className="absolute inset-0 z-20 pointer-events-none">
-        {[
-          { top: "8%",  left: "4%",  emoji: "⭐", size: "text-xl",   anim: { rotate: 360 },    dur: 20 },
-          { top: "70%", left: "6%",  emoji: "🌸", size: "text-lg",   anim: { y: [0,-12,0] },   dur: 4  },
-          { top: "22%", left: "2%",  emoji: "💛", size: "text-base", anim: { rotate: -360 },   dur: 26 },
-          { top: "55%", left: "38%", emoji: "✨", size: "text-sm",   anim: { y: [0,8,0] },     dur: 5  },
-          { top: "12%", left: "46%", emoji: "🎈", size: "text-lg",   anim: { y: [0,-10,0] },   dur: 6  },
-        ].map((s, i) => (
-          <motion.span
-            key={i}
-            style={{ top: s.top, left: s.left }}
-            className={`absolute ${s.size} opacity-60 select-none`}
-            animate={s.anim}
-            transition={{ duration: s.dur, repeat: Infinity, ease: "easeInOut" }}
-          >
-            {s.emoji}
-          </motion.span>
-        ))}
-      </div>
-
-      {/* ══════════════════════════════════════════
-          MAIN CONTENT
-      ══════════════════════════════════════════ */}
-      <div className="relative z-30 w-full max-w-7xl mx-auto px-5 sm:px-8 lg:px-16 py-20 sm:py-24 lg:py-32">
-        <div className="w-full sm:max-w-xl lg:max-w-2xl flex flex-col items-start gap-5">
-
-       
-
+      {/* ── MAIN CONTENT ── */}
+      <div className="relative z-30 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-16 py-10 sm:py-24 lg:py-32">
+        <div className="w-full sm:max-w-xl lg:max-w-2xl flex flex-col items-start gap-4 sm:gap-6">
+          
           {/* heading */}
           <FadeUp delay={0.08}>
-            <h1 className={`text-[54px] sm:text-7xl lg:text-[88px] leading-[1.05] text-[#E83D59] ${headingFont.className}`}>
+            <h1 className={`text-4xl sm:text-7xl lg:text-[88px] leading-[1.1] text-[#E83D59] ${headingFont.className}`}>
               Motherhood
-              <span className={`block text-[#3B6CA8] text-3xl sm:text-4xl lg:text-[50px] mt-1 ${headingFont.className}`}>
+              <span className={`block text-[#3B6CA8] text-2xl sm:text-4xl lg:text-[50px] mt-1 ${headingFont.className}`}>
                 Preschool And Daycare
               </span>
             </h1>
@@ -150,7 +130,7 @@ const HeroBanner: React.FC = () => {
 
           {/* body */}
           <FadeUp delay={0.16}>
-            <p className="text-base sm:text-lg text-gray-800 max-w-md leading-relaxed font-medium">
+            <p className="text-sm sm:text-lg text-gray-800 max-w-md leading-relaxed font-medium">
               A warm, nurturing Montessori space where your little one learns
               through play, builds confidence, and discovers the joy of curiosity
               — wrapped in a{" "}
@@ -160,52 +140,48 @@ const HeroBanner: React.FC = () => {
 
           {/* tagline */}
           <FadeUp delay={0.22}>
-            <p className={`text-lg sm:text-xl text-[#3B6CA8] font-bold ${taglineFont.className}`}>
+            <p className={`text-base sm:text-xl text-[#3B6CA8] font-bold ${taglineFont.className}`}>
               ✨ Where Montessori Meets Motherly Love
             </p>
           </FadeUp>
+
           {/* CTAs */}
-          <FadeUp delay={0.35}>
-            <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto pt-1">
+          <FadeUp delay={0.35} className="w-full sm:w-auto">
+            <div className="flex flex-col sm:flex-row gap-3 pt-2">
               <motion.button
                 whileHover={{ scale: 1.04, boxShadow: "0 14px 30px rgba(232,61,89,0.38)" }}
                 whileTap={{ scale: 0.97 }}
-                className="px-8 py-3.5 bg-[#E83D59] text-white rounded-full font-bold text-base sm:text-lg shadow-lg shadow-rose-200 transition-all duration-200 flex items-center justify-center gap-2"
+                className="px-8 py-3.5 bg-[#E83D59] text-white rounded-full font-bold text-base sm:text-lg shadow-lg shadow-rose-200 flex items-center justify-center gap-2"
               >
                 🗓️ Schedule a Tour
               </motion.button>
-            
             </div>
           </FadeUp>
 
           {/* social proof */}
           <FadeUp delay={0.42}>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 mt-2">
               <div className="flex -space-x-2">
                 {[image1 , image2, image3, image4].map((e, i) => (
                   <div
                     key={i}
-                    className="w-12 h-12 rounded-full bg-rose-100 border-2 border-white flex items-center justify-center text-sm shadow"
+                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-rose-100 border-2 border-white overflow-hidden shadow"
                   >
-                    <Image src={e} alt="Child" className="w-full h-full object-cover rounded-full" />
+                    <Image src={e} alt="Child" className="w-full h-full object-cover" />
                   </div>
                 ))}
               </div>
-              <p className="text-sm text-gray-700 font-semibold">
-                <span className="text-[#E83D59] font-extrabold">200+</span>{" "}
-                happy families & counting ⭐
+              <p className="text-xs sm:text-sm text-gray-700 font-semibold">
+                <span className="text-[#E83D59] font-extrabold">200+</span> happy families ⭐
               </p>
             </div>
           </FadeUp>
-
         </div>
       </div>
 
-  
-
       {/* ── WAVE DIVIDER ── */}
       <div className="absolute bottom-0 left-0 right-0 z-30 pointer-events-none">
-        <svg viewBox="0 0 1440 56" preserveAspectRatio="none" className="w-full h-10 sm:h-14" fill="#FFF9F5">
+        <svg viewBox="0 0 1440 56" preserveAspectRatio="none" className="w-full h-8 sm:h-14" fill="#FFF9F5">
           <path d="M0,32 C360,64 1080,0 1440,32 L1440,56 L0,56 Z" />
         </svg>
       </div>

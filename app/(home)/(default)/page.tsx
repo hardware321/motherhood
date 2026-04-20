@@ -16,7 +16,7 @@ export default function Page() {
       <HeroNEW/>
       {/* <SmallAbout/> */}
         <ProgramsSection/>
-        <Daycare/>
+        {/* <Daycare/> */}
               {/* <Programs/>
         <Homecta/>  
          <GallerySection/>

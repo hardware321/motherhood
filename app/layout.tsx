@@ -49,7 +49,7 @@ export default function RootLayout({
           {children}
           </ThemeProvider>
           <Toaster />
-          <Footer />
+          {/* <Footer /> */}
           {/* <Sessioprovider/> */}
 
       </body>

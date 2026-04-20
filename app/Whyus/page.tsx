@@ -1,431 +1,138 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
 import Image from "next/image";
-import { Home, ChevronRight, ShieldCheck, Apple, Sun, Compass, GraduationCap, Sparkles, Star, Heart } from "lucide-react";
-import { Titan_One, Nunito } from 'next/font/google';
+import { motion } from "framer-motion";
+import { ShieldCheck, HeartHandshake, Sparkles, BookHeart, School, Smile } from "lucide-react";
+import { Fredoka, Nunito } from "next/font/google";
 
-// Placeholder images - Replace with your actual paths
-import GirlHead from "../../public/girlfaceonly.png"; 
-import Boywithbrush from "../../public/boywithbrush.png"; 
-import girlonswing from "../../public/girlonwing.png"; 
-import boyonbucket from "../../public/boywithcup.png"; 
-import Whyheader from "@/components/WhyusHeader";
-import boywithelephant from "../../public/boywithelephent.png";
+import safetyImage from "../../public/compressed/young-european-female-with-daugheters-posing-isolated-white-surface.jpg.webp";
+import affectionImage from "../../public/compressed/young-beautiful-darkhaired-mother-holds-her-newborn-daughter-her-arms-cozy-home-family-portrait-motherhood-young-woman-kisses-her-2-month-old-baby.jpg.webp";
+import learningImage from "../../public/compressed/young-child-is-thoughtfully-engaged-with-abacus-suggesting-learning-play-environment.jpg.webp";
 
-// --- FONTS ---
-const titleFont = Titan_One({ 
-  weight: '400', 
-  subsets: ['latin'],
-  display: 'swap',
-});
+const headingFont = Fredoka({ subsets: ["latin"], weight: ["600"] });
+const bodyFont = Nunito({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"] });
 
-const bodyFont = Nunito({ 
-  subsets: ['latin'],
-  weight: ['400', '600', '700', '800'],
-  display: 'swap',
-});
+const reasons = [
+  {
+    icon: HeartHandshake,
+    title: "Emotionally Nurturing Care",
+    copy: "We create a first-school experience where children feel reassured, loved, and gently welcomed into each day.",
+    bg: "bg-rose-50",
+    iconStyle: "bg-rose-100 text-rose-500",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Safe And Supportive Spaces",
+    copy: "Parents trust us because safety, supervision, comfort, and thoughtful routines remain central to everything we do.",
+    bg: "bg-blue-50",
+    iconStyle: "bg-blue-100 text-blue-500",
+  },
+  {
+    icon: BookHeart,
+    title: "Learning With Joy",
+    copy: "Our classrooms blend creativity, structure, exploration, and emotional warmth so growth feels natural and happy.",
+    bg: "bg-amber-50",
+    iconStyle: "bg-amber-100 text-amber-500",
+  },
+  {
+    icon: School,
+    title: "Strong School Readiness",
+    copy: "Children build communication, confidence, routine, and foundational learning without losing the joy of childhood.",
+    bg: "bg-emerald-50",
+    iconStyle: "bg-emerald-100 text-emerald-500",
+  },
+  {
+    icon: Smile,
+    title: "Warm Parent Partnership",
+    copy: "We stay connected with families so each child receives continuity of care, understanding, and encouragement.",
+    bg: "bg-violet-50",
+    iconStyle: "bg-violet-100 text-violet-500",
+  },
+];
 
-// --- REUSABLE WAVE COMPONENT ---
-interface WaveSeparatorProps {
-  position: "top" | "bottom";
-  color: string; 
-}
-
-const WaveSeparator: React.FC<WaveSeparatorProps> = ({ position, color }) => {
-  const viewBoxWidth = 2000;
-  const viewBoxHeight = 100;
-
-  const getWavePath = (count: number) => {
-    const waveWidth = viewBoxWidth / count;
-    let pathD = "";
-
-    if (position === "top") {
-      pathD = `M0,${viewBoxHeight / 2} `;
-      for (let i = 0; i < count; i++) {
-        pathD += `q ${waveWidth / 4}, 25 ${waveWidth / 2}, 0 t ${waveWidth / 2}, 0 `;
-      }
-      pathD += `V ${viewBoxHeight} 0 H 0 Z`;
-    } else {
-      pathD = `M0,${viewBoxHeight / 2} `;
-      for (let i = 0; i < count; i++) {
-        pathD += `q ${waveWidth / 4}, -25 ${waveWidth / 2}, 0 t ${waveWidth / 2}, 0 `;
-      }
-      pathD += `V ${viewBoxHeight} H 0 Z`;
-    }
-    return pathD;
-  };
-
-  const mobilePath = getWavePath(5);
-  const desktopPath = getWavePath(20);
-
-  const WaveLayer = ({ pathD, opacityClass, duration }: { pathD: string, opacityClass: string, duration: number }) => (
-    <motion.div
-      className={`absolute inset-0 w-[200%] h-full ${color} ${opacityClass}`}
-      animate={{ x: position === "top" ? ["0%", "-50%"] : ["-50%", "0%"] }}
-      transition={{ duration: duration, repeat: Infinity, ease: "linear" }}
-    >
-      <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox={`0 0 ${viewBoxWidth} ${viewBoxHeight}`} preserveAspectRatio="none">
-        <path d={pathD} fill="currentColor"></path>
-      </svg>
-    </motion.div>
-  );
-
+export default function WhyUsPage() {
   return (
-    <div className={`absolute left-0 w-full h-[60px] md:h-[100px] overflow-hidden z-20 ${position === "top" ? "top-0" : "bottom-0"}`}>
-      <div className="block md:hidden w-full h-full absolute inset-0">
-        <WaveLayer pathD={mobilePath} opacityClass="opacity-40" duration={20} />
-        <WaveLayer pathD={mobilePath} opacityClass="opacity-100" duration={15} />
-      </div>
-      <div className="hidden md:block w-full h-full absolute inset-0">
-        <WaveLayer pathD={desktopPath} opacityClass="opacity-40" duration={20} />
-        <WaveLayer pathD={desktopPath} opacityClass="opacity-100" duration={15} />
-      </div>
-    </div>
-  );
-};
-
-
-// --- HEADER COMPONENT ---
-// const WhyChooseUsHeader = () => {
-//   return (
-//     <header className="relative w-full h-[50vh] min-h-[400px] bg-gradient-to-r from-cyan-400 via-teal-400 to-emerald-400 flex items-center justify-center overflow-hidden">
-      
-//       {/* Background Doodles */}
-//       <Whyheader />
-//       {/* <div className="absolute inset-0 pointer-events-none opacity-20">
-//          <motion.div animate={{ rotate: 360 }} transition={{ duration: 50, repeat: Infinity, ease: "linear" }} className="absolute top-10 left-10">
-//             <Star className="w-20 h-20 text-white" />
-//          </motion.div>
-//          <motion.div animate={{ y: [0, -20, 0] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }} className="absolute bottom-20 right-10">
-//             <Heart className="w-16 h-16 text-teal-100" />
-//          </motion.div>
-//       </div>
-
-//       <div className="relative z-10 text-center px-4 mt-8">
-//         <div className="inline-flex items-center gap-2 text-white/90 text-sm font-bold bg-white/20 backdrop-blur-md px-4 py-2 rounded-full mb-6">
-//             <Home className="w-4 h-4" />
-//             <span>Home</span>
-//             <ChevronRight className="w-4 h-4 opacity-75" />
-//             <span>Why Us</span>
-//         </div>
-
-//         <h1 className={`text-5xl md:text-7xl font-black text-white drop-shadow-md mb-4 ${titleFont.className}`}>
-//           Why Parents
-//           <span className="block text-teal-100 mt-2">Choose Us</span>
-//         </h1>
-        
-//         <p className="text-xl text-white/90 max-w-2xl mx-auto font-medium">
-//           A safe, happy, and inspiring place for your little one to grow.
-//         </p>
-//       </div> */}
-
-//       {/* WAVE: Connects to Section 1 (Cyan) */}
-//       {/* <WaveSeparator position="bottom" color="text-cyan-100" /> */}
-//     </header>
-//   );
-// };
-
-
-// --- MAIN PAGE COMPONENT ---
-const WhyChooseUsPage: React.FC = () => {
-  return (
-   <div>
-        <Whyheader />
-     <div className={`w-full flex flex-col ${bodyFont.className}`}>
-
-      {/* =========================================
-          SECTION 1: SAFETY & SECURITY (Cyan Theme)
-      ========================================= */}
-      <section className="relative w-full bg-rose-500 pt-20 pb-32 overflow-hidden">
-        {/* Top Wave: Not needed (Header handles it) */}
-        
-                <WaveSeparator position="top" color="text-white" />
-
-        <div className="absolute inset-0 pointer-events-none opacity-20 top-20">
-             <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-                <path d="M0,50 Q50,0 100,50" fill="none" stroke="#0891b2" strokeWidth="0.5" strokeDasharray="2,2"/>
-             </svg>
-        </div>
-
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="flex flex-col lg:flex-row items-center gap-16">
-            <motion.div 
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="w-full lg:w-1/2 text-left"
-            >
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-14 h-14 bg-cyan-200 rounded-full flex items-center justify-center shadow-sm">
-                    <ShieldCheck className="w-7 h-7 text-cyan-700" />
-                </div>
-                <h2 className={`text-4xl md:text-5xl font-black text-cyan-900 uppercase tracking-tight ${titleFont.className}`}>
-                  Safety & Security
-                </h2>
-              </div>
-              <p className="text-lg md:text-xl text-cyan-900/80 font-bold leading-relaxed mb-4">
-                Your child’s safety is our utmost priority.
-              </p>
-              <p className="text-lg text-cyan-800 font-medium leading-relaxed">
-                Our campus is equipped with secure entry systems, CCTV surveillance, and trained staff to ensure constant supervision at all times.
-              </p>
-            </motion.div>
-
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              className="w-full lg:w-1/2 flex justify-center"
-            >
-              <div className="relative w-[300px] h-[300px] md:w-[450px] md:h-[400px]">
-                 <Image 
-                   src={GirlHead} 
-                   alt="Safety and Security" 
-                   width={500}
-                   height={500}
-                   className="object-contain drop-shadow-xl"
-                 />
-                 <div className="absolute top-10 right-10 animate-pulse">
-                    <ShieldCheck className="w-12 h-12 text-cyan-400 opacity-50" />
-                 </div>
-              </div>
-            </motion.div>
+    <div className={`overflow-x-hidden bg-[#fff9f4] text-slate-800 ${bodyFont.className}`}>
+      <section className="px-6 pt-32 pb-16 md:px-10 lg:px-16">
+        <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1fr_1.05fr] lg:items-center">
+          <div>
+            <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-white px-4 py-2 text-sm font-bold text-[#3b6ca8] shadow-sm">
+              <Sparkles className="h-4 w-4" />
+              Why MothersPride
+            </div>
+            <h1 className={`mt-6 text-5xl leading-[1.05] text-slate-900 sm:text-6xl lg:text-7xl ${headingFont.className}`}>
+              Families choose us for the feeling
+              <span className="block text-[#3b6ca8]">their child carries home.</span>
+            </h1>
+            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-600 sm:text-xl">
+              That feeling is safety, affection, confidence, and joy. We focus on how children learn, but also on how they feel while learning, because both shape a strong beginning.
+            </p>
           </div>
-        </div>
 
-        {/* Bottom Wave: Transitions to White */}
-        <WaveSeparator position="bottom" color="text-white" />
-      </section>
-
-
-      {/* =========================================
-          SECTION 2: HEALTH & HYGIENE (White Theme)
-      ========================================= */}
-      <section className="w-full bg-white py-2 lg:py-2 overflow-hidden">
-        <div className="container mx-auto px-6">
-          <div className="flex flex-col lg:flex-row-reverse items-center gap-16">
-            <motion.div 
-               initial={{ opacity: 0, x: 50 }}
-               whileInView={{ opacity: 1, x: 0 }}
-               viewport={{ once: true }}
-               className="w-full lg:w-1/2 text-left lg:text-right"
-            >
-              <div className="flex items-center gap-4 mb-6 justify-start lg:justify-end">
-                 <h2 className={`text-4xl md:text-5xl font-black text-emerald-900 uppercase tracking-tight order-2 lg:order-1 ${titleFont.className}`}>
-                  Health & Hygiene
-                </h2>
-                <div className="w-14 h-14 bg-emerald-100 rounded-full flex items-center justify-center order-1 lg:order-2 shadow-sm">
-                    <Apple className="w-7 h-7 text-emerald-600" />
-                </div>
-              </div>
-              <p className="text-lg md:text-xl text-emerald-800/80 font-bold leading-relaxed mb-4">
-                We believe a healthy child is a happy learner.
+          <div className="grid gap-5 sm:grid-cols-2">
+            <div className="relative min-h-[240px] overflow-hidden rounded-[34px] shadow-[0_22px_70px_rgba(15,23,42,0.12)] sm:row-span-2">
+              <Image src={safetyImage} alt="Happy child and parent" fill className="object-cover" />
+            </div>
+            <div className="relative min-h-[180px] overflow-hidden rounded-[34px] shadow-[0_18px_50px_rgba(15,23,42,0.10)]">
+              <Image src={affectionImage} alt="Motherly affection" fill className="object-cover" />
+            </div>
+            <div className="rounded-[34px] bg-white p-6 shadow-[0_18px_50px_rgba(15,23,42,0.08)]">
+              <p className="text-sm font-extrabold uppercase tracking-[0.22em] text-[#e83d59]">Our Difference</p>
+              <p className={`mt-3 text-2xl leading-tight text-slate-900 ${headingFont.className}`}>
+                We balance premium preschool quality with the softness of everyday care.
               </p>
-              <p className="text-lg text-slate-600 font-medium leading-relaxed">
-                We maintain the highest standards of cleanliness. Classrooms and play areas are regularly sanitized, and children are served fresh, nutritious meals prepared under strict hygiene protocols.
-              </p>
-            </motion.div>
-
-            <motion.div 
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="w-full lg:w-1/2 flex justify-center lg:justify-start"
-            >
-               <div className="relative">
-                 <div className="absolute inset-0 bg-emerald-100 rounded-full blur-3xl opacity-50 -z-10 transform scale-110"></div>
-                 <Image 
-                   src={boyonbucket} 
-                   alt="Health and Hygiene" 
-                   width={400}
-                   height={400}
-                   className="object-contain"
-                 />
-               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
 
-
-      {/* =========================================
-          SECTION 3: ENVIRONMENT (Lime Theme)
-      ========================================= */}
-      <section className="relative w-full bg-lime-300  py-10 md:py-16 overflow-hidden">
-        
-        {/* FIX: Top Wave color set to WHITE to mask the top of the lime box against the previous white section */}
-        <WaveSeparator position="top" color="text-white" />
-        
-        <div className="absolute inset-0 pointer-events-none opacity-20 top-20">
-            <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-               <path d="M100,100 Q50,50 0,100" fill="none" stroke="#65a30d" strokeWidth="0.5" strokeDasharray="2,2"/>
-            </svg>
-        </div>
-
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="flex flex-col lg:flex-row items-center gap-16">
-            <motion.div 
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="w-full lg:w-1/2 text-left"
-            >
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-14 h-14 bg-lime-200 rounded-full flex items-center justify-center shadow-sm">
-                    <Sun className="w-7 h-7 text-lime-700" />
-                </div>
-                <h2 className={`text-4xl md:text-5xl font-black text-lime-900 uppercase tracking-tight ${titleFont.className}`}>
-                  Vibrant Environment
-                </h2>
-              </div>
-              <p className="text-lg text-lime-800 font-medium leading-relaxed">
-                Learning comes alive in a vibrant, child-friendly environment designed to spark curiosity. Each classroom is thoughtfully crafted with bright, engaging spaces and safe play zones.
-              </p>
-            </motion.div>
-
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              className="w-full lg:w-1/2 flex justify-center"
-            >
-              <div className="relative w-[300px] h-[300px] md:w-[450px] md:h-[400px]">
-                 <Image 
-                   src={girlonswing} 
-                   alt="Environment" 
-                   width={400}
-                   height={400}
-                   className="object-contain drop-shadow-xl"
-                 />
-              </div>
-            </motion.div>
-          </div>
-        </div>
-
-        {/* Bottom Wave: Transitions to White */}
-        <WaveSeparator position="bottom" color="text-white" />
-      </section>
-
-
-      {/* =========================================
-          SECTION 4: OUR APPROACH (White Theme)
-      ========================================= */}
-      <section className="w-full bg-white py-2 lg:py-2 overflow-hidden">
-        <div className="container mx-auto px-6">
-          <div className="flex flex-col lg:flex-row-reverse items-center gap-16">
-            <motion.div 
-               initial={{ opacity: 0, x: 50 }}
-               whileInView={{ opacity: 1, x: 0 }}
-               viewport={{ once: true }}
-               className="w-full lg:w-1/2 text-left lg:text-right"
-            >
-              <div className="flex items-center gap-4 mb-6 justify-start lg:justify-end">
-                 <h2 className={`text-4xl md:text-5xl font-black text-indigo-900 uppercase tracking-tight order-2 lg:order-1 ${titleFont.className}`}>
-                  Our Approach
-                </h2>
-                <div className="w-14 h-14 bg-indigo-100 rounded-full flex items-center justify-center order-1 lg:order-2 shadow-sm">
-                    <Compass className="w-7 h-7 text-indigo-600" />
-                </div>
-              </div>
-              <p className="text-lg md:text-xl text-indigo-800/80 font-bold leading-relaxed mb-4">
-                Nurturing both the mind and heart.
-              </p>
-              <p className="text-lg text-slate-600 font-medium leading-relaxed">
-                We combine play-based exploration with structured learning experiences to develop creativity, critical thinking, and social–emotional growth.
-              </p>
-            </motion.div>
-
-            <motion.div 
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="w-full lg:w-1/2 flex justify-center lg:justify-start"
-            >
-               <div className="relative">
-                 <div className="absolute inset-0 bg-indigo-100 rounded-full blur-3xl opacity-50 -z-10 transform scale-90"></div>
-                 <Image 
-                   src={boywithelephant} 
-                   alt="Our Approach" 
-                   width={300}
-                   height={300}
-                   className="object-contain"
-                 />
-               </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-
-      {/* =========================================
-          SECTION 5: QUALIFIED TEACHERS (Orange Theme)
-      ========================================= */}
-      <section className="relative w-full bg-orange-300 md:py-8 py-12 overflow-hidden">
-        
-        {/* FIX: Top Wave color set to WHITE to mask the top of the orange box against the previous white section */}
-        <WaveSeparator position="top" color="text-white" />
-        
-         <div className="absolute inset-0 pointer-events-none opacity-20 top-20">
-             <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-                <path d="M0,0 Q25,25 50,0 T100,0" fill="none" stroke="#ea580c" strokeWidth="0.5" strokeDasharray="2,2"/>
-             </svg>
-        </div>
-
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="flex flex-col lg:flex-row items-center gap-16">
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }}
+      <section className="px-6 py-8 md:px-10 lg:px-16">
+        <div className="mx-auto grid max-w-7xl gap-6 md:grid-cols-2 xl:grid-cols-3">
+          {reasons.map((reason, index) => (
+            <motion.div
+              key={reason.title}
+              initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="w-full lg:w-1/2 text-left"
+              transition={{ delay: index * 0.07, duration: 0.45 }}
+              className={`rounded-[30px] p-7 shadow-[0_20px_50px_rgba(15,23,42,0.06)] ${reason.bg}`}
             >
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-14 h-14 bg-orange-200 rounded-full flex items-center justify-center shadow-sm">
-                    <GraduationCap className="w-7 h-7 text-orange-600" />
-                </div>
-                <h2 className={`text-4xl md:text-5xl font-black text-orange-900 uppercase tracking-tight ${titleFont.className}`}>
-                  Qualified Teachers
-                </h2>
+              <div className={`mb-5 flex h-12 w-12 items-center justify-center rounded-2xl ${reason.iconStyle}`}>
+                <reason.icon className="h-6 w-6" />
               </div>
-              <p className="text-lg md:text-xl text-orange-800 font-bold leading-relaxed mb-4">
-                 Our greatest strength lies in our teachers.
-              </p>
-              <p className="text-lg text-orange-900/80 font-medium leading-relaxed">
-                Our educators are qualified, compassionate, and expertly trained in early childhood education. They use innovative, age-appropriate teaching methods to make every lesson engaging.
-              </p>
+              <h3 className={`text-2xl text-slate-900 ${headingFont.className}`}>{reason.title}</h3>
+              <p className="mt-3 text-base leading-relaxed text-slate-600">{reason.copy}</p>
             </motion.div>
-
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              className="w-full lg:w-1/2 flex justify-center"
-            >
-               <div className="relative w-[300px] h-[300px] md:w-[450px] md:h-[450px]">
-                 <Image 
-                   src={GirlHead} 
-                   alt="Qualified Teachers" 
-                   width={400}
-                   height={400}
-                   className="object-contain drop-shadow-2xl"
-                 />
-                 <div className="absolute top-0 right-10 animate-bounce">
-                    <Sparkles className="w-10 h-10 text-orange-400" />
-                 </div>
-               </div>
-            </motion.div>
-          </div>
+          ))}
         </div>
-
-        {/* Bottom Wave: Transitions to White */}
-        <WaveSeparator position="bottom" color="text-white" />
       </section>
 
-    </div>
-   </div>
-  );
-};
+      <section className="px-6 py-20 md:px-10 lg:px-16">
+        <div className="mx-auto grid max-w-7xl gap-10 rounded-[42px] bg-white p-6 shadow-[0_26px_90px_rgba(15,23,42,0.08)] md:p-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:p-14">
+          <div>
+            <p className="text-sm font-extrabold uppercase tracking-[0.22em] text-[#e83d59]">The MothersPride Experience</p>
+            <h2 className={`mt-4 text-4xl leading-tight text-slate-900 md:text-5xl ${headingFont.className}`}>
+              A child-first environment where confidence grows through comfort.
+            </h2>
+            <div className="mt-6 space-y-5 text-lg leading-relaxed text-slate-600">
+              <p>
+                Our teaching teams support communication, social ease, imagination, and foundational learning through warm interactions and purposeful classroom experiences.
+              </p>
+              <p>
+                Whether a child is joining preschool or daycare, the goal stays the same: to create an environment where they feel emotionally secure, seen as individuals, and excited to return the next day.
+              </p>
+              <p>
+                That is what gives families confidence in MothersPride, and what helps children step forward with trust.
+              </p>
+            </div>
+          </div>
 
-export default WhyChooseUsPage;
+          <div className="relative min-h-[360px] overflow-hidden rounded-[34px]">
+            <Image src={learningImage} alt="Learning with joy" fill className="object-cover" />
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}

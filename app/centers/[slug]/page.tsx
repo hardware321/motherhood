@@ -217,7 +217,7 @@ export default function CenterProfile({ params }: { params: { slug: string } }) 
                  </div>
                  <div>
                     <h3 className="font-bold text-slate-800">Email</h3>
-                    <p className="text-slate-500 text-sm font-medium break-all">{center.email || "info@littledreamers.com"}</p>
+                    <p className="text-slate-500 text-sm font-medium break-all">{center.email || "admissions@motherspride.in"}</p>
                  </div>
               </motion.div>
 
@@ -233,7 +233,7 @@ export default function CenterProfile({ params }: { params: { slug: string } }) 
                     {center.description || "Information about this center will be updated shortly."}
                   </p>
                   <p className="text-slate-600 text-lg leading-relaxed mb-8">
-                    At Little Dreamers At Cambridge {center.city}, we believe in creating a safe, nurturing, and stimulating environment where your child can grow, learn, and thrive. Our experienced staff and state-of-the-art facilities ensure the best early childhood education experience.
+                    At MothersPride {center.city}, we focus on creating a loving, nurturing, and stimulating environment where every child feels secure enough to grow, learn, and thrive with confidence.
                   </p>
                   
                   {center.status === "shortly" ? (

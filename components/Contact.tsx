@@ -115,7 +115,7 @@ const ContactUs = () => {
                 </div>
                 <div>
                   <p className="font-bold text-sm uppercase opacity-80 mb-1">Email Us</p>
-                  <p className="text-lg font-bold">info@littledreamersatcambridge.com</p>
+                  <p className="text-lg font-bold">admissions@motherspride.in</p>
                 </div>
               </li>
             </ul>

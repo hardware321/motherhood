@@ -114,7 +114,7 @@ const AboutHeader = () => {
                 className="text-lg lg:text-3xl text-[#3E3431]/90 font-medium max-w-xl mx-auto md:mx-0 leading-relaxed mt-2"
                 style={{ fontFamily: '"Baloo 2", cursive' }}
             >
-            A place where imagination has no limits and every child is a star.
+            A nurturing preschool and daycare where little hearts feel safe, seen, and lovingly guided.
             </motion.p>
         </div>
 
@@ -136,7 +136,7 @@ const AboutHeader = () => {
         >
             <Image 
                 src={Girlonwing} 
-                alt="Little Dreamer Girl Flying"
+                alt="MothersPride about illustration"
                 priority // Loads image quickly as it's above the fold
                 className="w-full ml-[2px] md:ml-[200px] h-[250px] md:h-auto max-h-[500px] object-contain drop-shadow-xl transform rotate-3 hover:rotate-0 transition-transform duration-500"
             />

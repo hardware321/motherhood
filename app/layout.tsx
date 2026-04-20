@@ -12,8 +12,8 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
-  title: 'Motherhood preschool and Daycare - Where Montessori Meets Motherly Love',
-  description: 'A loving and safe environment for children to explore, learn, and grow. We provide a holistic approach to early childhood education with experienced educators and a vibrant community.',
+  title: 'MothersPride Preschool & Daycare - A Loving Start For Every Little Learner',
+  description: 'MothersPride Preschool & Daycare offers a warm, caring space where children learn with joy, confidence, affection, and age-appropriate guidance.',
   images: [
     {
       url: logo,
@@ -33,7 +33,7 @@ export default function RootLayout({
 <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin='' />
 <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet"/>
       </head>
-      <body>
+      <body className='bg-[#fff9f5] text-slate-800'>
         <Navbar/>
 
         <ThemeProvider
@@ -42,14 +42,16 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <main className=''>
+            <main className='relative isolate'>
               <Analytics/>
               <SpeedInsights/>
             </main>
-          {children}
+          <div className='relative isolate'>
+            {children}
+          </div>
           </ThemeProvider>
           <Toaster />
-          {/* <Footer /> */}
+          <Footer />
           {/* <Sessioprovider/> */}
 
       </body>

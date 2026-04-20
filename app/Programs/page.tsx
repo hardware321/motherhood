@@ -1,271 +1,151 @@
 "use client";
 
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Play, ArrowRight, CheckCircle, Sparkles, Star, Cloud } from 'lucide-react';
-import { Titan_One, Nunito, Caveat } from 'next/font/google';
-import Image from 'next/image';
+import React from "react";
+import Image from "next/image";
+import { motion } from "framer-motion";
+import { ArrowRight, Check, Sparkles } from "lucide-react";
+import { Fredoka, Nunito } from "next/font/google";
 
-// --- IMAGE IMPORTS ---
-import boywithcup from "../../public/boywithcup.png";
-import girlwithbook from "../../public/girlwithbook 1.svg"
-import boywithelephant from "../../public/boywithelephent.png"
-import girlonswing from "../../public/girlonwing.png"
-import boywithbrush from "../../public/boywithbrush.png"
+import playgroupImage from "../../public/compressed/young-boy-girl-playing-indoors-with-eco-toys.jpg.webp";
+import nurseryImage from "../../public/compressed/young-girl-sitting-table-drawing-colorful-picture-with-crayons.jpg.webp";
+import lkgImage from "../../public/compressed/young-child-is-thoughtfully-engaged-with-abacus-suggesting-learning-play-environment.jpg.webp";
+import ukgImage from "../../public/compressed/elementary-school-teacher-with-class.jpg.webp";
+import daycareImage from "../../public/compressed/happy-family-home-mother-lifting-air-little-toddler-child-daughter-mom-baby-girl-playing-h.jpg.webp";
 
-// --- FONTS ---
-const titleFont = Titan_One({ 
-  weight: '400', 
-  subsets: ['latin'],
-  display: 'swap',
-});
+const headingFont = Fredoka({ subsets: ["latin"], weight: ["600"] });
+const bodyFont = Nunito({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"] });
 
-const bodyFont = Nunito({ 
-  subsets: ['latin'],
-  weight: ['400', '600', '700', '800'],
-  display: 'swap',
-});
-
-const handwritingFont = Caveat({
-  subsets: ['latin'],
-  weight: ['400', '700'],
-  display: 'swap',
-});
-
-// --- TYPES ---
-type ThemeColor = 'rose' | 'sky' | 'purple' | 'teal' | 'amber';
-
-interface Program {
-  id: number;
-  title: string;
-  subtitle: string;
-  description: string;
-  fullDescription: string;
-  theme: ThemeColor;
-  image: any;
-  features: string[]; // Added bullet points for detail
-  ids?: string;
-}
-
-// --- DATA ---
-const programs: Program[] = [
+const programs = [
   {
-    id: 1,
+    id: "explorers",
+    label: "Playgroup | 2 - 3 Years",
     title: "Little Explorers",
-    subtitle: "Play Group – Age 2–3 Years",
-    description: "At Little Dreamers, our Little Explorers begin their joyful learning journey through play and imagination.",
-    fullDescription: "Activities are thoughtfully designed to build sensory awareness, strengthen motor skills, and encourage social interaction. Children learn to adapt, express themselves freely, and gain early confidence.",
-    theme: "rose", 
-    image: boywithcup,
-    features: ["Sensory Play", "Social Interaction", "Motor Skills"],
-    ids: "#explorers"
+    intro: "A loving first step into school life where toddlers feel secure, engaged, and gently encouraged.",
+    copy: "This program focuses on settling, sensory discovery, movement, music, social comfort, and joyful routines that help children feel at ease away from home.",
+    bullets: ["Comfort-led settling", "Sensory play", "Music and rhythm", "Early social confidence"],
+    image: playgroupImage,
+    palette: "from-rose-200 via-white to-amber-100",
+    accent: "text-rose-500",
+    chip: "bg-rose-500",
   },
   {
-    id: 2,
+    id: "learners",
+    label: "Nursery | 3 - 4 Years",
     title: "Curious Learners",
-    subtitle: "Nursery – Age 3–4 Years",
-    description: "Our Curious Learners explore the world of colors, numbers, and letters through fun, interactive activities.",
-    fullDescription: "This stage builds imagination, communication, and growing independence. Children learn to observe, question, express, and share their ideas.",
-    theme: "sky",
-    image: girlwithbook,
-    features: ["Early Phonics", "Number Sense", "Creative Arts"],
-    ids: "#learners"
+    intro: "A bright, hands-on learning space for imagination, language, creativity, and cheerful exploration.",
+    copy: "Children begin recognizing patterns, sounds, colors, numbers, and routines through activities designed to make learning feel playful and deeply engaging.",
+    bullets: ["Phonics readiness", "Creative expression", "Group participation", "Confidence building"],
+    image: nurseryImage,
+    palette: "from-[#e9f4ff] via-white to-[#fff4dd]",
+    accent: "text-sky-500",
+    chip: "bg-sky-500",
   },
   {
-    id: 3,
+    id: "thinkers",
+    label: "LKG | 4 - 5 Years",
     title: "Creative Thinkers",
-    subtitle: "LKG – Age 4–5 Years",
-    description: "Children strengthen early academic skills while exploring creativity, imagination, and expression.",
-    fullDescription: "Through phonics, storytelling, art, and group play, they build confidence. Each day encourages children to think creatively and communicate confidently.",
-    theme: "purple",
-    image: boywithelephant,
-    features: ["Public Speaking", "Logical Reasoning", "Collaborative Play"],
-    ids: "#thinkers"
+    intro: "A thoughtful lower kindergarten stage where early academics grow alongside confidence and imagination.",
+    copy: "Children explore language, numbers, storytelling, art, and classroom independence with structured support that still feels warm and child-centered.",
+    bullets: ["Early reading readiness", "Conceptual learning", "Creative thinking", "Independent habits"],
+    image: lkgImage,
+    palette: "from-[#f4ecff] via-white to-[#ffeef5]",
+    accent: "text-violet-500",
+    chip: "bg-violet-500",
   },
   {
-    id: 4,
+    id: "leaders",
+    label: "UKG | 5 - 6 Years",
     title: "Future Leaders",
-    subtitle: "UKG – Age 5–6 Years",
-    description: "Prepares children for formal schooling by building a strong foundation in academics and life skills.",
-    fullDescription: "With structured learning in language, math, and environmental studies, children develop clarity in concepts and confidence in application.",
-    theme: "teal",
-    image: girlonswing,
-    features: ["School Readiness", "Advanced Math", "Leadership Skills"],
-    ids: "#leaders"
+    intro: "A confident bridge into formal schooling with stronger communication, concepts, and classroom readiness.",
+    copy: "The UKG experience strengthens focus, numeracy, language, and self-expression while helping children transition smoothly into primary school expectations.",
+    bullets: ["School readiness", "Language confidence", "Numeracy foundations", "Expression and focus"],
+    image: ukgImage,
+    palette: "from-[#e6fbf5] via-white to-[#eef8ff]",
+    accent: "text-emerald-500",
+    chip: "bg-emerald-500",
   },
   {
-    id: 5,
-    title: "Day Care Service",
-    subtitle: "Flexible Hours – 2 Years+",
-    description: "A home away from home where your child is cared for in a safe, engaging, and loving environment.",
-    fullDescription: "Our Day Care program offers structured relaxation, nutritious snacks, and supervised play activities giving parents peace of mind.",
-    theme: "amber",
-    image: boywithbrush,
-    features: ["Nutritious Meals", "Safe Environment", "Homework Help"],
-    ids: "#daycare"
-  }
+    id: "daycare",
+    label: "Daycare | Flexible Care",
+    title: "Daycare With Heart",
+    intro: "A safe, soothing extension of home for children who need warmth, supervision, routine, and engagement through the day.",
+    copy: "Our daycare model offers emotional reassurance, rest time, guided play, and mindful care so children feel comfortable and parents feel peaceful.",
+    bullets: ["Comfort and supervision", "Routine and rest", "Safe engagement", "Parent peace of mind"],
+    image: daycareImage,
+    palette: "from-[#fff1da] via-white to-[#ffe7ec]",
+    accent: "text-amber-500",
+    chip: "bg-amber-500",
+  },
 ];
 
-// --- WAVE COMPONENT ---
-const WaveSeparator = ({ position, color }: { position: "top" | "bottom", color: string }) => {
-    return (
-      <div className={`absolute left-0 w-full h-[50px] md:h-[80px] overflow-hidden z-20 ${position === "top" ? "top-0" : "bottom-0"}`}>
-         <svg className={`relative block w-full h-full ${color}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-             {position === "top" ? (
-                 <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="currentColor"></path>
-             ) : (
-                 <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" fill="currentColor"></path>
-             )}
-         </svg>
-      </div>
-    );
-};
-
-// --- MAIN COMPONENT ---
-const page: React.FC = () => {
+export default function ProgramsPage() {
   return (
-    <div className={`w-full bg-white overflow-hidden ${bodyFont.className}`}>
-      
-      {/* HEADER */}
-      <div className="text-center pt-20 pb-16 px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <span className="text-sky-500 font-bold tracking-wider text-sm uppercase bg-sky-100 px-4 py-1 rounded-full">
-              Academic Programs
-            </span>
-            <h2 className={`text-5xl md:text-7xl mt-4 uppercase leading-tight ${titleFont.className}`}>
-              <span className="text-rose-500">Learning</span>{' '}
-              <span className="text-slate-800">Pathways</span>
-            </h2>
-            <div className="w-24 h-2 bg-amber-300 rounded-full mx-auto mt-4"></div>
-          </motion.div>
-      </div>
+    <div className={`overflow-x-hidden bg-[#fffaf6] text-slate-800 ${bodyFont.className}`}>
+      <section className="px-6 pt-32 pb-12 md:px-10 lg:px-16">
+        <div className="mx-auto max-w-7xl">
+          <div className="max-w-3xl">
+            <div className="inline-flex items-center gap-2 rounded-full border border-amber-200 bg-white px-4 py-2 text-sm font-bold text-amber-600 shadow-sm">
+              <Sparkles className="h-4 w-4" />
+              MothersPride Learning Journey
+            </div>
+            <h1 className={`mt-6 text-5xl leading-[1.05] text-slate-900 sm:text-6xl lg:text-7xl ${headingFont.className}`}>
+              Programs designed to grow
+              <span className="block text-[#e83d59]">with your child, not ahead of them.</span>
+            </h1>
+            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-600 sm:text-xl">
+              Every stage at MothersPride is carefully shaped around emotional comfort, joyful exploration, and age-appropriate development so children feel supported as they grow.
+            </p>
+          </div>
+        </div>
+      </section>
 
-      {/* PROGRAMS LOOP */}
-      <div className="flex flex-col">
-        {programs.map((program, index) => {
-          // Logic to alternate backgrounds: Color -> White -> Color
-          const isColoredBackground = index % 2 === 0; 
-          const isReversedLayout = index % 2 !== 0;
-
-          // Map Theme to Tailwind Colors
-          const themeMap: Record<ThemeColor, { bg: string, text: string, wave: string, accent: string }> = {
-            rose:   { bg: 'bg-rose-50', text: 'text-rose-600', wave: 'text-rose-50', accent: 'bg-rose-500' },
-            sky:    { bg: 'bg-sky-50', text: 'text-sky-600', wave: 'text-sky-50', accent: 'bg-sky-500' },
-            purple: { bg: 'bg-purple-50', text: 'text-purple-600', wave: 'text-purple-50', accent: 'bg-purple-500' },
-            teal:   { bg: 'bg-teal-50', text: 'text-teal-600', wave: 'text-teal-50', accent: 'bg-teal-500' },
-            amber:  { bg: 'bg-amber-50', text: 'text-amber-600', wave: 'text-amber-50', accent: 'bg-amber-500' },
-          };
-
-          const style = themeMap[program.theme];
-
-          return (
-            <section 
-              key={program.id} 
-              className={`relative py-24 md:py-32 ${isColoredBackground ? style.bg : 'bg-white'}`}
+      <section className="px-6 pb-20 md:px-10 lg:px-16">
+        <div className="mx-auto max-w-7xl space-y-8">
+          {programs.map((program, index) => (
+            <motion.div
+              key={program.id}
+              id={program.id}
+              initial={{ opacity: 0, y: 22 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.05 }}
+              className={`grid overflow-hidden rounded-[38px] border border-white/70 bg-gradient-to-br ${program.palette} shadow-[0_24px_70px_rgba(15,23,42,0.08)] lg:grid-cols-[0.9fr_1.1fr]`}
             >
-               {/* WAVES */}
-               {isColoredBackground && (
-                 <>
-                   <WaveSeparator position="top" color="text-white" />
-                   <WaveSeparator position="bottom" color="text-white" />
-                 </>
-               )}
+              <div className="relative min-h-[300px] lg:min-h-[420px]">
+                <Image src={program.image} alt={program.title} fill className="object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/30 via-transparent to-transparent lg:bg-gradient-to-r lg:from-slate-950/10 lg:to-transparent" />
+              </div>
 
-               {/* Background Elements (Doodles) */}
-               {isColoredBackground && (
-                 <div className="absolute inset-0 pointer-events-none opacity-20">
-                    <Cloud className="absolute top-20 left-10 w-24 h-24" />
-                    <Star className="absolute bottom-20 right-10 w-16 h-16" />
-                 </div>
-               )}
+              <div className="p-8 md:p-10 lg:p-12">
+                <div className="flex flex-wrap items-center gap-3">
+                  <span className={`inline-flex rounded-full px-4 py-2 text-sm font-extrabold uppercase tracking-[0.18em] text-white ${program.chip}`}>
+                    {program.label}
+                  </span>
+                </div>
+                <h2 className={`mt-5 text-4xl leading-tight text-slate-900 md:text-5xl ${headingFont.className}`}>{program.title}</h2>
+                <p className={`mt-4 text-lg font-bold leading-relaxed ${program.accent}`}>{program.intro}</p>
+                <p className="mt-4 text-base leading-relaxed text-slate-600 md:text-lg">{program.copy}</p>
 
-            <div  id={program.ids} className="container mx-auto px-6 relative z-10">
-                 <div className={`flex flex-col gap-12 items-center ${isReversedLayout ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}>
-                    
-                    {/* TEXT SIDE */}
-                    <motion.div 
-                      className="w-full lg:w-1/2"
-                      initial={{ opacity: 0, x: isReversedLayout ? 50 : -50 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.6 }}
-                    >
-                       <span className={`inline-block px-4 py-2 rounded-lg font-bold text-sm mb-4 ${isColoredBackground ? 'bg-white' : style.bg} ${style.text}`}>
-                          {program.subtitle}
-                       </span>
-                       
-                       <h3 className={`text-4xl md:text-5xl mb-6 ${titleFont.className} ${style.text}`}>
-                         {program.title}
-                       </h3>
-                       
-                       <p className="text-slate-700 text-lg md:text-xl font-bold mb-4 leading-relaxed">
-                         {program.description}
-                       </p>
-                       <p className="text-slate-600 text-base leading-relaxed mb-8">
-                         {program.fullDescription}
-                       </p>
+                <div className="mt-8 grid gap-3 sm:grid-cols-2">
+                  {program.bullets.map((item) => (
+                    <div key={item} className="flex items-center gap-3 rounded-2xl bg-white/80 px-4 py-3 shadow-sm backdrop-blur">
+                      <div className={`flex h-8 w-8 items-center justify-center rounded-full text-white ${program.chip}`}>
+                        <Check className="h-4 w-4" />
+                      </div>
+                      <span className="text-sm font-bold text-slate-700">{item}</span>
+                    </div>
+                  ))}
+                </div>
 
-                       {/* Features List */}
-                       <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
-                         {program.features.map((feature, i) => (
-                           <li key={i} className="flex items-center gap-2 text-slate-700 font-semibold">
-                              <CheckCircle className={`w-5 h-5 ${style.text}`} />
-                              {feature}
-                           </li>
-                         ))}
-                       </ul>
-
-                       <div className="flex gap-4">
-                          <button className={`px-8 py-3 rounded-full text-white font-bold shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all flex items-center gap-2 ${style.accent}`}>
-                             Enquire Now <ArrowRight className="w-4 h-4" />
-                          </button>
-                       </div>
-                    </motion.div>
-
-                    {/* IMAGE SIDE */}
-                    <motion.div 
-                      className="w-full lg:w-1/2 flex justify-center"
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.6 }}
-                    >
-                       <div className="relative w-full max-w-[500px] aspect-square">
-                          {/* Blob Background */}
-                          <div className={`absolute inset-4 rounded-[3rem] ${isColoredBackground ? 'bg-white/50' : style.bg} rotate-3`}></div>
-                          
-                          {/* Image Container */}
-                          <div className={`absolute inset-0 rounded-[3rem] overflow-hidden border-4 ${isColoredBackground ? 'border-white' : style.bg} shadow-2xl bg-white -rotate-3 hover:rotate-0 transition-transform duration-500`}>
-                              <div className="w-full h-full flex items-center justify-center p-8">
-                                <Image 
-                                  src={program.image} 
-                                  alt={program.title}
-                                  width={500}
-                                  height={500}
-                                  className="object-contain w-full h-full drop-shadow-md"
-                                />
-                              </div>
-                          </div>
-
-                          {/* Floating Badge */}
-                          <div className="absolute -bottom-6 -right-6 bg-white p-4 rounded-full shadow-xl animate-bounce">
-                             <Sparkles className={`w-8 h-8 ${style.text}`} />
-                          </div>
-                       </div>
-                    </motion.div>
-
-                 </div>
-               </div>
-            </section>
-          );
-        })}
-      </div>
+                <button className="mt-8 inline-flex items-center gap-2 rounded-full bg-slate-900 px-7 py-3 text-sm font-extrabold uppercase tracking-[0.14em] text-white transition-all hover:-translate-y-1 hover:bg-slate-800">
+                  Enquire Now
+                  <ArrowRight className="h-4 w-4" />
+                </button>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
     </div>
   );
-};
-
-export default page;
+}

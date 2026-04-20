@@ -6,13 +6,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Nunito, Sniglet } from 'next/font/google';
+import { Nunito } from 'next/font/google';
 
 // Placeholder for your logo
 import logo from "../../public/logopng.png"; 
 
 // --- FONTS ---
-const accentFont = Sniglet({ weight: ['400', '800'], subsets: ['latin'] });
 const bodyFont = Nunito({ subsets: ['latin'], weight: ['500', '600', '700', '800', '900'] });
 
 const Navbar = () => {
@@ -64,17 +63,17 @@ const Navbar = () => {
   const socialLinks = [
     { 
       icon: Facebook, 
-      href: "https://www.facebook.com/littledreamersatcambridge/", 
+      href: "#", 
       className: "text-[#3B6CA8] bg-blue-50/50 hover:bg-[#3B6CA8] hover:text-white border-blue-100" 
     },
     { 
       icon: Instagram, 
-      href: "https://www.instagram.com/little_dreamers_at_cambridge/", 
+      href: "#", 
       className: "text-[#E83D59] bg-rose-50/50 hover:bg-[#E83D59] hover:text-white border-rose-100" 
     },
     { 
       icon: Youtube, 
-      href: "https://www.youtube.com/@LittleDreamersAtCambridge", 
+      href: "#", 
       className: "text-red-500 bg-red-50/50 hover:bg-red-500 hover:text-white border-red-100" 
     },
   ];
@@ -102,7 +101,7 @@ const Navbar = () => {
                 src={logo} 
                 width={260}  
                 height={80}
-                alt="Motherhood Preschool Logo"
+                alt="MothersPride Preschool Logo"
                 className="object-contain"
                 priority
               />

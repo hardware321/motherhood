@@ -1,303 +1,171 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
 import Image from "next/image";
-import GirlHead from "../../public/girlfaceonly.png"; // Placeholder Image
-import Boywithbrush from "../../public/boywithbrush.png"; // Placeholder Image
-import girlonswing from "../../public/girlonwing.png"; // Placeholder Image
-import { Target, Lightbulb, Heart, Sparkles } from "lucide-react";
-import boyonbucket from "../../public/boywithcup.png"; // Placeholder Image
-import AboutHeaderSimple from "@/components/AboutHeader";
-import { Titan_One, Nunito, Caveat } from 'next/font/google';
-import girlwithbook from "../../public/girlwithbook.png"
+import { motion } from "framer-motion";
+import { Heart, Sparkles, ShieldCheck, BookOpen, Users } from "lucide-react";
+import { Fredoka, Nunito } from "next/font/google";
 
-// --- REUSABLE WAVE COMPONENT ---
-interface WaveSeparatorProps {
-  position: "top" | "bottom";
-  color?: string; // Allow changing wave color if needed
-}
+import familyImage from "../../public/compressed/beautiful-mother-with-little-daughter.jpg.webp";
+import classroomImage from "../../public/compressed/elementary-school-teacher-with-class.jpg.webp";
+import careImage from "../../public/compressed/young-mom-holding-hugging-adorable-baby-enjoying-motherhood-child-care-standing-bedroom-home.jpg.webp";
 
-const titleFont = Titan_One({ 
-  weight: '400', 
-  subsets: ['latin'],
-  display: 'swap',
-});
+const headingFont = Fredoka({ subsets: ["latin"], weight: ["600"] });
+const bodyFont = Nunito({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"] });
 
-const bodyFont = Nunito({ 
-  subsets: ['latin'],
-  weight: ['400', '600', '700', '800'],
-  display: 'swap',
-});
+const values = [
+  {
+    icon: Heart,
+    title: "Motherly Care",
+    copy: "A gentle first-school experience where emotional comfort matters just as much as learning.",
+    accent: "rose",
+  },
+  {
+    icon: BookOpen,
+    title: "Purposeful Learning",
+    copy: "Play-led exploration, language exposure, creativity, and school readiness woven into everyday routines.",
+    accent: "amber",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Safe Environment",
+    copy: "Thoughtful supervision, caring teachers, and spaces designed to help children feel secure and settled.",
+    accent: "blue",
+  },
+  {
+    icon: Users,
+    title: "Family Partnership",
+    copy: "We work closely with parents so each child receives continuity of care between home and school.",
+    accent: "emerald",
+  },
+];
 
-const handwritingFont = Caveat({
-  subsets: ['latin'],
-  weight: ['400', '700'],
-  display: 'swap',
-});
-
-const WaveSeparator: React.FC<WaveSeparatorProps> = ({ position, color = "text-white" }) => {
-  const viewBoxWidth = 2000;
-  const viewBoxHeight = 100;
-
-  const getWavePath = (count: number) => {
-    const waveWidth = viewBoxWidth / count;
-    let pathD = "";
-
-    if (position === "top") {
-      pathD = `M0,${viewBoxHeight / 2} `;
-      for (let i = 0; i < count; i++) {
-        pathD += `q ${waveWidth / 4}, 25 ${waveWidth / 2}, 0 t ${waveWidth / 2}, 0 `;
-      }
-      pathD += `V ${viewBoxHeight} 0 H 0 Z`;
-    } else {
-      pathD = `M0,${viewBoxHeight / 2} `;
-      for (let i = 0; i < count; i++) {
-        pathD += `q ${waveWidth / 4}, -25 ${waveWidth / 2}, 0 t ${waveWidth / 2}, 0 `;
-      }
-      pathD += `V ${viewBoxHeight} H 0 Z`;
-    }
-    return pathD;
-  };
-
-  const mobilePath = getWavePath(5);
-  const desktopPath = getWavePath(20);
-
-  const WaveLayer = ({ pathD, opacityClass, duration }: { pathD: string, opacityClass: string, duration: number }) => (
-    <motion.div
-      className={`absolute inset-0 w-[200%] h-full ${color} ${opacityClass}`}
-      animate={{ x: position === "top" ? ["0%", "-50%"] : ["-50%", "0%"] }}
-      transition={{ duration: duration, repeat: Infinity, ease: "linear" }}
-    >
-      <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox={`0 0 ${viewBoxWidth} ${viewBoxHeight}`} preserveAspectRatio="none">
-        <path d={pathD} fill="currentColor"></path>
-      </svg>
-    </motion.div>
-  );
-
+export default function AboutPage() {
   return (
-    <div className={`absolute left-0 w-full h-[60px] sm:h-[100px] overflow-hidden z-20 ${position === "top" ? "top-0" : "bottom-0"}`}>
-      <div className="block md:hidden w-full h-full absolute inset-0">
-        <WaveLayer pathD={mobilePath} opacityClass="opacity-40" duration={20} />
-        <WaveLayer pathD={mobilePath} opacityClass="opacity-100" duration={15} />
-      </div>
-      <div className="hidden md:block w-full h-full absolute inset-0">
-        <WaveLayer pathD={desktopPath} opacityClass="opacity-40" duration={20} />
-        <WaveLayer pathD={desktopPath} opacityClass="opacity-100" duration={15} />
-      </div>
-    </div>
-  );
-};
-
-const AboutUsSegmented: React.FC = () => {
-  return (
-    <div className="w-full flex flex-col">
-
-      <AboutHeaderSimple />
-      
-      {/* =========================================
-          SECTION 1: OUR AIM (Wavy Background)
-      ========================================= */}
-      <section className="relative w-full bg-amber-200 md:py-14  py-10 overflow-hidden">
-        <WaveSeparator position="top" color="text-white" />
-        
-        {/* Background Doodle */}
-        <div className="absolute inset-0 pointer-events-none opacity-10 top-2">
-             <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-                <path d="M0,0 Q50,100 100,0" fill="none" stroke="#f59e0b" strokeWidth="0.5" strokeDasharray="2,2"/>
-             </svg>
-        </div>
-
-        <div className="container mx-auto px-2 relative z-10">
-          <div className="flex flex-col lg:flex-row items-center gap-16">
-            
-            {/* TEXT (Left) */}
-            <motion.div 
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="w-full lg:w-1/2 text-left"
-            >
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 bg-amber-200 rounded-full flex items-center justify-center">
-                    <Target className="w-6 h-6 text-amber-700" />
-                </div>
-                <h2 className={`text-4xl md:text-5xl font-black text-amber-900 uppercase tracking-tight" ${titleFont.className}`}>
-                  Our Aim
-                </h2>
+    <div className={`overflow-x-hidden bg-[#fff9f5] text-slate-800 ${bodyFont.className}`}>
+      <section className="relative overflow-hidden px-6 pt-32 pb-16 md:px-10 lg:px-16">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(232,61,89,0.12),_transparent_35%),radial-gradient(circle_at_bottom_right,_rgba(59,108,168,0.12),_transparent_30%)]" />
+        <div className="relative mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+          <div>
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-rose-200 bg-white/80 px-4 py-2 text-sm font-bold text-rose-500 shadow-sm backdrop-blur">
+              <Sparkles className="h-4 w-4" />
+              About MothersPride
+            </div>
+            <h1 className={`max-w-3xl text-5xl leading-[1.05] text-slate-900 sm:text-6xl lg:text-7xl ${headingFont.className}`}>
+              A preschool experience shaped by
+              <span className="block text-[#e83d59]">love, affection, and care.</span>
+            </h1>
+            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-600 sm:text-xl">
+              MothersPride Preschool & Daycare is built around a simple belief: children learn best when they feel emotionally safe, warmly welcomed, and joyfully engaged. We create that feeling from the very first hello.
+            </p>
+            <div className="mt-8 grid gap-4 sm:grid-cols-3">
+              <div className="rounded-[28px] bg-white p-5 shadow-[0_20px_60px_rgba(231,94,120,0.12)]">
+                <p className="text-3xl font-extrabold text-[#e83d59]">2-6 yrs</p>
+                <p className="mt-1 text-sm font-semibold text-slate-500">Thoughtfully nurtured age groups</p>
               </div>
-              
-              <p className="text-lg md:text-xl text-amber-800 font-medium leading-relaxed mb-6">
-                At <strong>Little Dreamers at Cambridge</strong>, we are committed to nurturing young minds through quality early education for children aged 2 to 6 years.
-              </p>
-              <p className="text-lg md:text-xl text-amber-800 font-medium leading-relaxed">
-                Our programs focus on creativity, curiosity, and confidence — helping every child discover their unique potential. We don’t just teach — we inspire future leaders.
-              </p>
-            </motion.div>
-
-            {/* IMAGE (Right) */}
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              className="w-full lg:w-1/2 flex justify-center"
-            >
-              <div className="relative w-[300px] h-[300px] md:w-[450px] md:h-[400px]">
-                 {/* No Card, just image with shape */}
-                 <Image 
-                   src={Boywithbrush} 
-                   alt="Our Aim" 
-                   width={500}
-                   height={500}
-                   className="object-contain drop-shadow-2xl"
-                 />
-                 {/* Floating Element */}
-                 <div className="absolute top-0 right-10 animate-bounce">
-                    <Sparkles className="w-10 h-10 text-amber-400" />
-                 </div>
+              <div className="rounded-[28px] bg-white p-5 shadow-[0_20px_60px_rgba(59,108,168,0.12)]">
+                <p className="text-3xl font-extrabold text-[#3b6ca8]">Play-led</p>
+                <p className="mt-1 text-sm font-semibold text-slate-500">Learning that feels natural and joyful</p>
               </div>
-            </motion.div>
-
+              <div className="rounded-[28px] bg-white p-5 shadow-[0_20px_60px_rgba(245,158,11,0.14)]">
+                <p className="text-3xl font-extrabold text-amber-500">Care+</p>
+                <p className="mt-1 text-sm font-semibold text-slate-500">Preschool warmth with daycare comfort</p>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <WaveSeparator position="bottom" color="text-white" />
-      </section>
-
-
-      {/* =========================================
-          SECTION 2: OUR VISION (White Background - Clean)
-      ========================================= */}
-      <section className="w-full bg-white py-2 lg:py-0 overflow-hidden">
-        <div className="container mx-auto px-6">
-          <div className="flex flex-col lg:flex-row-reverse items-center md:gap-8 gap-8">
-            
-            {/* TEXT (Right) */}
-            <motion.div 
-               initial={{ opacity: 0, x: 50 }}
-               whileInView={{ opacity: 1, x: 0 }}
-               viewport={{ once: true }}
-               className="w-full lg:w-1/2 text-left lg:text-right"
+          <div className="relative">
+            <div className="absolute -left-6 top-8 h-44 w-44 rounded-full bg-rose-200/50 blur-3xl" />
+            <div className="absolute -right-4 bottom-8 h-40 w-40 rounded-full bg-blue-200/50 blur-3xl" />
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7 }}
+              className="relative overflow-hidden rounded-[42px] bg-white p-4 shadow-[0_30px_80px_rgba(30,41,59,0.14)]"
             >
-              <div className="flex items-center gap-4 mb-6 justify-start lg:justify-end">
-                 <h2 className={`text-4xl md:text-5xl font-black text-slate-900 uppercase tracking-tight order-2 lg:order-1 ${titleFont.className}`}>
-                  Our Vision
-                </h2>
-                <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center order-1 lg:order-2">
-                    <Lightbulb className="w-6 h-6 text-purple-600" />
+              <div className="grid gap-4 sm:grid-cols-[1fr_0.75fr]">
+                <div className="relative min-h-[420px] overflow-hidden rounded-[30px]">
+                  <Image src={familyImage} alt="Mother and child smiling" fill className="object-cover" />
+                </div>
+                <div className="grid gap-4">
+                  <div className="relative min-h-[200px] overflow-hidden rounded-[26px]">
+                    <Image src={classroomImage} alt="Preschool classroom learning" fill className="object-cover" />
+                  </div>
+                  <div className="rounded-[26px] bg-[#fff3f6] p-5">
+                    <p className="text-sm font-extrabold uppercase tracking-[0.22em] text-[#e83d59]">Our Promise</p>
+                    <p className={`mt-3 text-2xl leading-tight text-slate-900 ${headingFont.className}`}>
+                      Where Montessori-inspired learning meets motherly reassurance.
+                    </p>
+                  </div>
                 </div>
               </div>
-
-              <p className="text-lg md:text-xl text-slate-600 font-medium leading-relaxed mb-6">
-                We strive to create a joyful, safe, and stimulating environment where children learn through exploration, imagination, and purposeful play.
-              </p>
-              <p className="text-lg md:text-xl text-slate-600 font-medium leading-relaxed">
-                With a strong focus on holistic development — intellectual, emotional, social, and physical — we aspire to empower every child to become an independent thinker and a future-ready leader.
-              </p>
             </motion.div>
-
-            {/* IMAGE (Left) */}
-            <motion.div 
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="w-full lg:w-1/2 flex justify-center lg:justify-start"
-            >
-               <div className="relative">
-                 {/* Simple Blob Background behind image */}
-                 <div className=" inset-0 bg-purple-100 rounded-full blur-3xl opacity-50 -z-10 transform scale-100"></div>
-                 <Image 
-                   src={girlwithbook} 
-                   alt="Our Vision" 
-                   width={350}
-                   height={350}
-                   className="object-contain"
-                 />
-               </div>
-            </motion.div>
-
           </div>
         </div>
       </section>
 
-
-      {/* =========================================
-          SECTION 3: WHY US (Wavy Background)
-      ========================================= */}
-      <section className="relative w-full bg-rose-400 pt-14 pb-14 overflow-hidden">
-        <WaveSeparator position="top" color="text-white" />
-        
-        {/* Background Doodle */}
-         <div className="absolute inset-0 pointer-events-none opacity-10 top-4">
-             <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-                <path d="M100,0 Q50,100 0,0" fill="none" stroke="#e11d48" strokeWidth="0.5" strokeDasharray="2,2"/>
-             </svg>
-        </div>
-
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="flex flex-col lg:flex-row items-center gap-16">
-            
-            {/* TEXT (Left) */}
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }}
+      <section className="px-6 py-8 md:px-10 lg:px-16">
+        <div className="mx-auto grid max-w-7xl gap-6 md:grid-cols-2 xl:grid-cols-4">
+          {values.map((value, index) => (
+            <motion.div
+              key={value.title}
+              initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="w-full lg:w-1/2 text-left"
+              transition={{ delay: index * 0.08, duration: 0.45 }}
+              className="rounded-[30px] border border-white/60 bg-white/90 p-6 shadow-[0_18px_45px_rgba(15,23,42,0.06)]"
             >
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 bg-rose-200 rounded-full flex items-center justify-center">
-                    <Heart className="w-6 h-6 text-rose-600" />
-                </div>
-                <h2 className={`text-4xl md:text-5xl font-black text-rose-900 uppercase tracking-tight ${titleFont.className}`}>
-                  Why Choose Us
-                </h2>
+              <div className={`mb-5 flex h-12 w-12 items-center justify-center rounded-2xl ${
+                value.accent === "rose"
+                  ? "bg-rose-100 text-rose-500"
+                  : value.accent === "amber"
+                    ? "bg-amber-100 text-amber-500"
+                    : value.accent === "blue"
+                      ? "bg-blue-100 text-blue-500"
+                      : "bg-emerald-100 text-emerald-500"
+              }`}>
+                <value.icon className="h-6 w-6" />
               </div>
-              
-              <p className="text-lg md:text-xl text-rose-800 font-medium leading-relaxed mb-6">
-                Parents choose <strong>Little Dreamers</strong> because we blend care, creativity, and high-quality education to create a warm, nurturing environment.
-              </p>
-              <ul className="space-y-4">
-                <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 mt-2.5 bg-rose-500 rounded-full shrink-0" />
-                  <span className="text-lg text-rose-800 font-medium">Curriculum that balances play with purposeful learning.</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 mt-2.5 bg-rose-500 rounded-full shrink-0" />
-                  <span className="text-lg text-rose-800 font-medium">Compassionate educators focusing on unique strengths.</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 mt-2.5 bg-rose-500 rounded-full shrink-0" />
-                  <span className="text-lg text-rose-800 font-medium">Holistic development for life, not just school.</span>
-                </li>
-              </ul>
+              <h3 className={`text-2xl text-slate-900 ${headingFont.className}`}>{value.title}</h3>
+              <p className="mt-3 text-base leading-relaxed text-slate-600">{value.copy}</p>
             </motion.div>
-
-            {/* IMAGE (Right) */}
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              className="w-full lg:w-1/2 flex justify-center"
-            >
-               <div className="relative w-[300px] h-[300px] md:w-[450px] md:h-[450px]">
-                 <Image 
-                   src={boyonbucket} 
-                   alt="Why Choose Us" 
-                   width={500}
-                   height={500}
-                   className="object-contain drop-shadow-2xl"
-                 />
-               </div>
-            </motion.div>
-
-          </div>
+          ))}
         </div>
-
-        <WaveSeparator position="bottom" color="text-white" />
       </section>
 
+      <section className="px-6 py-20 md:px-10 lg:px-16">
+        <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[0.95fr_1.05fr]">
+          <div className="relative min-h-[420px] overflow-hidden rounded-[42px] shadow-[0_30px_80px_rgba(30,41,59,0.16)]">
+            <Image src={careImage} alt="Caring preschool environment" fill className="object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent" />
+            <div className="absolute bottom-6 left-6 right-6 rounded-[28px] bg-white/88 p-5 backdrop-blur">
+              <p className="text-sm font-extrabold uppercase tracking-[0.2em] text-[#3b6ca8]">Why Families Connect</p>
+              <p className="mt-2 text-base font-semibold leading-relaxed text-slate-700">
+                Because a child&apos;s first school should feel nurturing, beautiful, and emotionally comforting.
+              </p>
+            </div>
+          </div>
+
+          <div>
+            <p className="text-sm font-extrabold uppercase tracking-[0.24em] text-[#e83d59]">Our Approach</p>
+            <h2 className={`mt-4 text-4xl leading-tight text-slate-900 md:text-5xl ${headingFont.className}`}>
+              We don&apos;t just prepare children for school.
+              <span className="block text-[#3b6ca8]">We prepare them to feel confident in it.</span>
+            </h2>
+            <div className="mt-8 space-y-6 text-lg leading-relaxed text-slate-600">
+              <p>
+                At MothersPride, routines are intentional, transitions are gentle, and every classroom interaction is designed to build belonging. Children are encouraged to speak, move, imagine, create, and discover at their own pace.
+              </p>
+              <p>
+                Our programs support cognitive growth, social confidence, emotional expression, language development, and independence while preserving the softness and affection young children need during these early years.
+              </p>
+              <p>
+                The result is a preschool and daycare environment that feels elevated and warm at the same time: structured enough for growth, tender enough for trust.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
-};
-
-export default AboutUsSegmented;
+}

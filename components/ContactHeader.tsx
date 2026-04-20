@@ -93,9 +93,9 @@ const ContactHeader = () => {
                 transition={{ duration: 0.5, type: "spring" }}
                 className={`text-6xl lg:text-7xl text-[#3E3431] mb-2 drop-shadow-sm leading-tight ${titleFont.className}`}
             >
-               Get In
+               Let&apos;s
             <span className="text-[#D33060]  ml-4 relative">
-                Touch
+                Connect
                 {/* Crown/Highlight Doodle - Uncommented for effect */}
             </span>
             </motion.h1>
@@ -109,7 +109,7 @@ const ContactHeader = () => {
                 className="text-lg lg:text-3xl text-[#3E3431]/90 font-medium max-w-xl mx-auto md:mx-0 leading-relaxed mt-4"
                 style={{ fontFamily: '"Baloo 2", cursive' }}
             >
-            A place where imagination has no limits and every child is a star.
+            We would love to help you with admissions, tours, daycare support, or center-related questions.
             </motion.p>
         </div>
 
@@ -131,7 +131,7 @@ const ContactHeader = () => {
         >
             <Image 
                 src={Girlonwing} 
-                alt="Little Dreamer Girl Flying"
+                alt="MothersPride contact illustration"
                 priority // Loads image quickly as it's above the fold
                 className="w-full ml-[2px] md:ml-[200px] h-[250px] md:h-auto max-h-[500px] object-contain drop-shadow-xl transform rotate-3 hover:rotate-0 transition-transform duration-500"
             />

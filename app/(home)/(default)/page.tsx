@@ -14,10 +14,10 @@ export default function Page() {
   return (
     <div className="w-full  to-white overflow-x-hidden relative">
       <HeroNEW/>
-      {/* <SmallAbout/>
+      {/* <SmallAbout/> */}
         <ProgramsSection/>
         <Daycare/>
-              <Programs/>
+              {/* <Programs/>
         <Homecta/>  
          <GallerySection/>
         <OurOffices/>

@@ -1,242 +1,292 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Play, ArrowRight } from 'lucide-react'; // Removed unused Chevron imports
-import { Titan_One, Nunito, Caveat } from 'next/font/google';
-import boywithcup from "../public/boywithcup.png";
-import girlwithbook from "../public/girlwithbook 1.svg"
-import boywithelephant from "../public/boywithelephent.png"
-import girlonswing from "../public/girlonwing.png"
-import boywithbrush from "../public/boywithbrush.png" // Kept import, though not currently used in array
-import Image from 'next/image';
-import Link from 'next/link';
+import React, { useRef } from "react";
+import { motion, useScroll, useTransform, useInView } from "framer-motion";
+import { ArrowRight, Heart, Star, Sparkles, BookOpen, Users, Palette, Crown } from "lucide-react";
+import { Fredoka, Nunito, Quicksand } from "next/font/google";
+import Image from "next/image";
+import Link from "next/link";
 
-// --- TYPES & INTERFACES ---
+import boywithcup from "../public/compressed/happy-family-home-mother-lifting-air-little-toddler-child-daughter-mom-baby-girl-playing-h.jpg.webp";
+import girlwithbook from "../public/compressed/heartfelt-moment-mother-embracing-her-newborn-baby-with-pure-love-joy.jpg.webp";
+import boywithelephant from "../public/compressed/maternal-love-mother-baby-white-background.jpg.webp";
+import girlonswing from "../public/compressed/mother-baby.jpg.webp";
 
-type ThemeColor = 'rose' | 'sky' | 'purple' | 'teal' | 'amber';
+const headingFont = Fredoka({ subsets: ["latin"], weight: ["600"] });
+const bodyFont = Nunito({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"] });
+const taglineFont = Quicksand({ subsets: ["latin"], weight: ["600", "700"] });
 
 interface Program {
   id: number;
   title: string;
   subtitle: string;
+  ageRange: string;
   description: string;
-  fullDescription: string;
-  theme: ThemeColor;
+  highlights: string[];
   image: any;
-  ids: string;
+  linkId: string;
+  accentColor: string;
+  bgGradient: string;
 }
 
-interface ThemeStyles {
-  text: string;
-  bg: string;
-  border: string;
-  btn: string;
-  image?: string;
-}
-
-// --- FONT CONFIGURATION ---
-const titleFont = Titan_One({ 
-  weight: '400', 
-  subsets: ['latin'],
-  display: 'swap',
-});
-
-const bodyFont = Nunito({ 
-  subsets: ['latin'],
-  weight: ['400', '600', '700', '800'],
-  display: 'swap',
-});
-
-const handwritingFont = Caveat({
-  subsets: ['latin'],
-  weight: ['400', '700'],
-  display: 'swap',
-});
-
-// --- DATA ---
 const programs: Program[] = [
   {
     id: 1,
     title: "Little Explorers",
-    subtitle: "Play Group (2–3 Years)",
-    description: "At Little Dreamers, our Little Explorers begin their joyful learning journey through play and imagination.",
-    fullDescription: "Activities are thoughtfully designed to build sensory awareness, strengthen motor skills, and encourage social interaction.",
-    theme: "rose", 
-    image : boywithcup,
-    ids: "#explorers"
+    subtitle: "Play Group",
+    ageRange: "2–3 Years",
+    description: "A joyful journey of discovery through sensory play and imagination. Every day is a brand new adventure!",
+    highlights: ["Sensory Play", "Social Skills", "Music & Movement", "Storytime"],
+    image: boywithcup,
+    linkId: "explorers",
+    accentColor: "#F472B6", // Soft Warm Pink
+    bgGradient: "from-rose-400/80 via-orange-300/70 to-amber-200/60", // Warmth & Mother Love
   },
   {
     id: 2,
     title: "Curious Learners",
-    subtitle: "Nursery (3–4 Years)",
-    description: "Our Curious Learners explore the world of colors, numbers, and letters through fun, interactive activities.",
-    fullDescription: "This stage builds imagination, communication, and growing independence. Children learn to observe and question.",
-    theme: "sky",
-    image : girlwithbook,
-    ids: "learners"
+    subtitle: "Nursery",
+    ageRange: "3–4 Years",
+    description: "Exploring colors, numbers, and letters through hands-on play and interactive experiences.",
+    highlights: ["Numbers & Letters", "Art & Craft", "Group Play", "Phonics"],
+    image: girlwithbook,
+    linkId: "learners",
+    accentColor: "#2DD4BF", // Soft Teal
+    bgGradient: "from-teal-400/80 via-emerald-300/70 to-sky-200/60", // Peace & Serenity
   },
   {
     id: 3,
     title: "Creative Thinkers",
-    subtitle: "LKG (4–5 Years)",
-    description: "Children strengthen early academic skills while exploring creativity, imagination, and expression.",
-    fullDescription: "Through phonics, storytelling, art, and group play, they build confidence to think creatively.",
-    theme: "purple",
-    image : boywithelephant,
-    ids: "thinkers"
+    subtitle: "LKG",
+    ageRange: "4–5 Years",
+    description: "Strengthening early academics while fostering creative expression, confidence, and curiosity.",
+    highlights: ["Reading Ready", "STEM Basics", "Drama & Dance", "Creative Arts"],
+    image: boywithelephant,
+    linkId: "thinkers",
+    accentColor: "#A78BFA", // Soft Lavender
+    bgGradient: "from-violet-400/80 via-purple-300/70 to-fuchsia-200/60", // Care & Gentleness
   },
   {
     id: 4,
     title: "Future Leaders",
-    subtitle: "UKG (5–6 Years)",
-    description: "Prepares children for formal schooling by building a strong foundation in academics and life skills.",
-    fullDescription: "With structured learning in language, math, and environmental studies, children develop clarity.",
-    theme: "teal",
-    image : girlonswing,
-    ids: "/Programs/#leaders"
-  }
+    subtitle: "UKG",
+    ageRange: "5–6 Years",
+    description: "Building a strong foundation for formal schooling and essential life skills with joy and confidence.",
+    highlights: ["School Readiness", "Leadership", "Critical Thinking", "Problem Solving"],
+    image: girlonswing,
+    linkId: "leaders",
+    accentColor: "#FB923C", // Soft Apricot
+    bgGradient: "from-orange-400/80 via-amber-300/70 to-yellow-100/60", // Nurturing Sunshine
+  },
 ];
 
-// --- COMPONENTS ---
+/* ── Floating particle ── */
+const FloatingDot = ({ x, y, size, color, delay }: { x: string; y: string; size: number; color: string; delay: number }) => (
+  <motion.div
+    className="absolute rounded-full pointer-events-none"
+    style={{ left: x, top: y, width: size, height: size, backgroundColor: color }}
+    animate={{ y: [0, -20, 0], opacity: [0.4, 1, 0.4], scale: [1, 1.3, 1] }}
+    transition={{ duration: 4 + delay, repeat: Infinity, delay, ease: "easeInOut" }}
+  />
+);
 
-const ProgramSection: React.FC = () => {
-  // Removed scrollRef and scroll function as they are not needed for Grid layout
+/* ── Individual card ── */
+const ProgramCard = ({ program, index }: { program: Program; index: number }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id='programs' className={`py-2 relative overflow-hidden ${bodyFont.className}`}>
-      
-      <div className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* --- HEADER --- */}
-        <div className="text-center mb-8 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className={`text-5xl pt-2 md:text-7xl uppercase leading-tight ${titleFont.className}`}>
-              <span className="text-rose-500">Our </span>{' '}
-              <span className="text-black">Programs</span>
-            </h2>
-          </motion.div>
-          
-          {/* Decorative bird */}
-          <div className="hidden md:block absolute -top-0 right-10 text-6xl animate-bounce" style={{ animationDuration: '3s' }}>
-             🐦
-          </div>
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 60, scale: 0.92 }}
+      animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
+      transition={{ delay: index * 0.15, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+      className="group relative h-[560px] rounded-[36px] overflow-hidden cursor-pointer"
+      whileHover={{ y: -12, transition: { duration: 0.3, ease: "easeOut" } }}
+    >
+      {/* ── Shadow ring on hover ── */}
+      <div
+        className="absolute inset-0 rounded-[36px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-30"
+        style={{ boxShadow: `0 0 0 3px ${program.accentColor}60, 0 30px 60px ${program.accentColor}40` }}
+      />
+
+      {/* ── Background image ── */}
+      <div className="absolute inset-0 z-0 transition-transform duration-700 group-hover:scale-105">
+        <Image
+          src={program.image}
+          alt={program.title}
+          fill
+          className="object-cover brightness-75"
+        />
+      </div>
+
+      {/* ── Gradient overlay ── */}
+      <div
+        className={`absolute inset-0 z-[1] bg-gradient-to-t ${program.bgGradient} opacity-70 group-hover:opacity-80 transition-opacity duration-500`}
+      />
+      <div className="absolute inset-0 z-[2] bg-gradient-to-t from-black/60 via-transparent to-black/20" />
+
+
+      {/* ── Age range arc ── */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 opacity-10 pointer-events-none">
+        <span className="text-[130px] font-black text-white leading-none select-none">
+          {program.ageRange.split("–")[0]}
+        </span>
+      </div>
+
+      {/* ── CONTENT BOTTOM ── */}
+      <div className="absolute inset-0 z-20 p-7 flex flex-col justify-end">
+        {/* Subtitle */}
+        <p className={`text-xs font-bold uppercase tracking-[0.25em] text-white/70 mb-1 ${taglineFont.className}`}>
+          {program.subtitle} · {program.ageRange}
+        </p>
+
+        {/* Title */}
+        <h3 className={`text-4xl text-white mb-2 leading-tight ${headingFont.className}`}>
+          {program.title}
+        </h3>
+
+        {/* Animated underline */}
+        <div
+          className="h-1 w-12 rounded-full mb-4 transition-all duration-500 group-hover:w-24"
+          style={{ backgroundColor: "white", opacity: 0.5 }}
+        />
+
+        {/* Description */}
+        <p className={`text-sm text-white/90 leading-relaxed mb-5 ${bodyFont.className}`}>
+          {program.description}
+        </p>
+
+        {/* Highlights chips — slide up on hover */}
+        <div className="flex flex-wrap gap-2 mb-5 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-400">
+          {program.highlights.map((h) => (
+            <span
+              key={h}
+              className="text-[11px] font-bold px-3 py-1 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white"
+            >
+              {h}
+            </span>
+          ))}
         </div>
 
-        {/* --- PROGRAM GRID --- */}
-        <div 
-          className="
-            grid 
-            grid-cols-1        
-            md:grid-cols-2     
-            xl:grid-cols-4     
-            gap-8
-            pb-12
-          "
-        >
+        {/* CTA */}
+        <Link href={`/programs#${program.linkId}`}>
+          <motion.button
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.97 }}
+            className="flex items-center gap-2 bg-white px-6 py-3 rounded-2xl font-bold text-sm shadow-2xl w-fit"
+            style={{ color: program.accentColor }}
+          >
+            Explore Program
+            <ArrowRight className="w-4 h-4" />
+          </motion.button>
+        </Link>
+      </div>
+    </motion.div>
+  );
+};
+
+
+/* ── Main section ── */
+const ProgramSection: React.FC = () => {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
+
+  return (
+    <section
+      id="programs"
+      ref={sectionRef}
+      className={`relative py-28 overflow-hidden ${bodyFont.className}`}
+      style={{ background: "linear-gradient(160deg, #FFF5F7 0%, #FFF9F5 40%, #F0F7FF 100%)" }}
+    >
+      {/* ── Decorative background blobs ── */}
+      <motion.div style={{ y: bgY }} className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 -left-32 w-[500px] h-[500px] bg-rose-200/30 rounded-full blur-[80px]" />
+        <div className="absolute bottom-0 -right-32 w-[500px] h-[500px] bg-blue-200/30 rounded-full blur-[80px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-100/20 rounded-full blur-[100px]" />
+      </motion.div>
+
+      {/* ── Floating decorative dots ── */}
+      <FloatingDot x="8%" y="15%" size={14} color="#E83D5940" delay={0} />
+      <FloatingDot x="90%" y="10%" size={10} color="#3B6CA840" delay={1} />
+      <FloatingDot x="5%" y="70%" size={18} color="#9333EA30" delay={2} />
+      <FloatingDot x="92%" y="65%" size={12} color="#05966930" delay={0.5} />
+      <FloatingDot x="50%" y="5%" size={8} color="#E83D5950" delay={1.5} />
+
+      <div className="max-w-[1600px] mx-auto px-6 relative z-10">
+
+        {/* ────── HEADER ────── */}
+        <div className="text-center mb-6">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            {/* Eyebrow */}
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <div className="h-px w-16 bg-gradient-to-r from-transparent to-rose-400" />
+              <p className={`text-[#E83D59] font-bold uppercase tracking-[0.2em] text-xs flex items-center gap-1.5 ${taglineFont.className}`}>
+                <Sparkles className="w-3.5 h-3.5" />
+                Our Learning Pathways
+                <Sparkles className="w-3.5 h-3.5" />
+              </p>
+              <div className="h-px w-16 bg-gradient-to-l from-transparent to-rose-400" />
+            </div>
+
+            {/* Headline */}
+            <h2 className={`text-6xl md:text-7xl text-[#1a1a2e] mb-4 leading-tight ${headingFont.className}`}>
+              Where Every Child{" "}
+              <span
+                className="relative inline-block"
+                style={{
+                  background: "linear-gradient(135deg, #E83D59, #F97316, #E83D59)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                }}
+              >
+                Shines
+                <motion.svg
+                  className="absolute -bottom-2 left-0 w-full"
+                  viewBox="0 0 200 12"
+                  initial={{ pathLength: 0 }}
+                  whileInView={{ pathLength: 1 }}
+                  transition={{ duration: 1, delay: 0.5 }}
+                  viewport={{ once: true }}
+                >
+                  <motion.path
+                    d="M 0 8 Q 50 0 100 8 Q 150 16 200 8"
+                    stroke="#E83D59"
+                    strokeWidth="3"
+                    fill="none"
+                    strokeLinecap="round"
+                    initial={{ pathLength: 0 }}
+                    whileInView={{ pathLength: 1 }}
+                    transition={{ duration: 1, delay: 0.5 }}
+                    viewport={{ once: true }}
+                  />
+                </motion.svg>
+              </span>
+            </h2>
+
+            <p className="text-gray-500 text-lg max-w-xl mx-auto leading-relaxed">
+              Thoughtfully designed programs that grow with your child — from first steps to school readiness.
+            </p>
+          </motion.div>
+        </div>
+
+                
+        {/* ────── PROGRAM CARDS GRID ────── */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-7">
           {programs.map((program, index) => (
-            <ProgramCard key={program.id} data={program} index={index} />
+            <ProgramCard key={program.id} program={program} index={index} />
           ))}
         </div>
 
       </div>
     </section>
-  );
-};
-
-// --- CARD COMPONENT ---
-
-interface ProgramCardProps {
-  data: Program;
-  index: number;
-}
-
-const ProgramCard: React.FC<ProgramCardProps> = ({ data, index }) => {
-  
-  const colors: Record<ThemeColor, ThemeStyles> = {
-    rose:   { text: 'text-rose-600', bg: 'bg-rose-50', border: 'border-rose-200', btn: 'bg-rose-500' },
-    sky:    { text: 'text-sky-600', bg: 'bg-sky-50', border: 'border-sky-200', btn: 'bg-sky-500' },
-    purple: { text: 'text-purple-600', bg: 'bg-purple-50', border: 'border-purple-200', btn: 'bg-purple-500' },
-    teal:   { text: 'text-teal-600', bg: 'bg-teal-50', border: 'border-teal-200', btn: 'bg-teal-500' },
-    amber:  { text: 'text-amber-600', bg: 'bg-amber-50', border: 'border-amber-200', btn: 'bg-amber-500' },
-  };
-
-  const theme = colors[data.theme];
-
-  return (
-    <motion.div
-      className={`
-        w-full h-full
-        flex flex-col items-center gap-6 
-        p-8 md:p-8
-        bg-white border-[3px] ${theme.border} 
-        rounded-[50px]
-        shadow-xl hover:shadow-2xl transition-all duration-300
-        hover:-translate-y-2
-      `}
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.1 }}
-      viewport={{ once: true }}
-    >
-      {/* --- CHARACTER IMAGE --- */}
-      <div className="relative mb-2">
-        <div className="w-40 h-40 sm:w-48 sm:h-48 overflow-hidden flex items-center justify-center relative z-10">
-          <Image 
-            src={data.image} 
-            alt={data.title} 
-            width={320}
-            height={320}
-            className="object-cover py-8" 
-          /> 
-        </div>
-        {/* Decorative glow */}
-        <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] h-[90%] ${theme.bg} rounded-full blur-2xl opacity-60 -z-0`} />
-      </div>
-
-      {/* --- CONTENT --- */}
-      <div className="flex-1 text-center space-y-4 w-full flex flex-col justify-between">
-        <div>
-          <h3 className={`text-2xl lg:text-3xl ${theme.text} mb-2 ${handwritingFont.className} font-bold tracking-wide`}>
-            {data.title}
-          </h3>
-          <p className={`text-gray-700 font-extrabold text-xs uppercase tracking-widest ${bodyFont.className}`}>
-            {data.subtitle}
-          </p>
-          
-          <p className={`text-gray-700 text-sm sm:text-base leading-relaxed font-semibold px-2 mt-4 ${bodyFont.className}`}>
-            {data.description}
-            <span className="inline"> {data.fullDescription}</span>
-          </p>
-        </div>
-
-        {/* --- ACTION BUTTONS --- */}
-        <Link href={`Programs/#${data.ids}`} className="w-full">
-          <div className="pt-6 flex items-center justify-center gap-4">
-            <motion.button 
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className={`px-6 py-3 rounded-full bg-gradient-to-r from-gray-800 to-black text-white font-bold text-xs sm:text-sm flex items-center gap-2 shadow-lg hover:shadow-xl transition-all ${bodyFont.className}`}
-            >
-              Know More 
-              <ArrowRight className="w-4 h-4" />
-            </motion.button>
-
-            <motion.button 
-              whileHover={{ scale: 1.15, rotate: 15 }}
-              whileTap={{ scale: 0.9 }}
-              className="w-12 h-12 rounded-full bg-amber-400 hover:bg-amber-500 flex items-center justify-center shadow-lg hover:shadow-xl border-4 border-white transition-all"
-            >
-              <Play className="w-4 h-4 fill-white text-white ml-1" />
-            </motion.button>
-          </div>
-        </Link>
-      </div>
-    </motion.div>
   );
 };
 
